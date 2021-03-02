@@ -14,7 +14,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * 用户服务 下订单
@@ -53,20 +57,21 @@ public class UserController {
         //1. 限流 熔断 降级 限制90%的用户
 
 
-        ProductDTO productDTO=productFeignService.findProductById(Long.valueOf(productId));
-        OrderDTO orderDTO=new OrderDTO();
+        ProductDTO productDTO = productFeignService.findProductById(Long.valueOf(productId));
+        OrderDTO orderDTO = new OrderDTO();
         orderDTO.setProductId(Long.valueOf(productId));
-        orderDTO.setUserId(iUserService.findUserById(1l)+"");
+        orderDTO.setUserId(iUserService.findUserById(1l) + "");
         orderDTO.setCreateTime(DateTimeConverterUtil.toDate(LocalDateTime.now()));
         orderDTO.setProductNums(1);
         orderDTO.setStatus(2);
         orderDTO.setTotal(productDTO.getProductPrice());
 
         // 多线程处理-用户下单
-        listeningExecutorService.submit(()->{
+        listeningExecutorService.submit(() -> {
             orderFeignService.placeOrder(orderDTO);
         });
 
         return "";
     }
+
 }
