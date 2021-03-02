@@ -21,6 +21,7 @@ import java.io.IOException;
  * @return
  * @date 2021/3/2 23:53
  */
+/*
 @Service
 public class CustomUrlBlockHandler implements BlockExceptionHandler {
 
@@ -46,8 +47,6 @@ public class CustomUrlBlockHandler implements BlockExceptionHandler {
         sb.append("msg:" + msg);
         sb.append("   status:" + httpServletResponse.getStatus());
 
-        //如果加了转义符号看不明白
-        //使用类创建就json对象
         httpServletResponse.getWriter().write(JSON.toJSONString(sb.toString()));
     }
-}
+}*/
