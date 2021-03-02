@@ -1,5 +1,7 @@
 create database IF NOT EXISTS `leaf` default character set utf8 collate utf8_bin;
 
+use `leaf`;
+
 CREATE TABLE `leaf_alloc` (
   `biz_tag` varchar(128)  NOT NULL DEFAULT '',
   `max_id` bigint(20) NOT NULL DEFAULT '1',
