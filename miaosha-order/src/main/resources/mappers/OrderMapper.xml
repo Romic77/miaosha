@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.miaosha.miaoshaproduct.domain.dao.OrderMapper">
+  <resultMap id="BaseResultMap" type="com.miaosha.miaoshaproduct.domain.entity.Order">
+    <constructor>
+      <idArg column="order_id" javaType="java.lang.Long" jdbcType="BIGINT" />
+      <arg column="product_id" javaType="java.lang.Long" jdbcType="BIGINT" />
+      <arg column="prod_name" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="user_id" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="total" javaType="java.math.BigDecimal" jdbcType="DECIMAL" />
+      <arg column="remarks" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="status" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="product_nums" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="create_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="update_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="pay_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="dvy_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="finally_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="cancel_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="is_payed" javaType="java.lang.Boolean" jdbcType="BIT" />
+      <arg column="delete_status" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="refund_sts" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="order_type" javaType="java.lang.Byte" jdbcType="TINYINT" />
+      <arg column="close_type" javaType="java.lang.Byte" jdbcType="TINYINT" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List">
+    order_id, product_id, prod_name, user_id, total, remarks, status, product_nums, create_time, 
+    update_time, pay_time, dvy_time, finally_time, cancel_time, is_payed, delete_status, 
+    refund_sts, order_type, close_type
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_order
+    where order_id = #{orderId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from t_order
+    where order_id = #{orderId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.miaosha.miaoshaproduct.domain.entity.Order">
+    insert into t_order (order_id, product_id, prod_name, 
+      user_id, total, remarks, 
+      status, product_nums, create_time, 
+      update_time, pay_time, dvy_time, 
+      finally_time, cancel_time, is_payed, 
+      delete_status, refund_sts, order_type, 
+      close_type)
+    values (#{orderId,jdbcType=BIGINT}, #{productId,jdbcType=BIGINT}, #{prodName,jdbcType=VARCHAR}, 
+      #{userId,jdbcType=VARCHAR}, #{total,jdbcType=DECIMAL}, #{remarks,jdbcType=VARCHAR}, 
+      #{status,jdbcType=INTEGER}, #{productNums,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{payTime,jdbcType=TIMESTAMP}, #{dvyTime,jdbcType=TIMESTAMP}, 
+      #{finallyTime,jdbcType=TIMESTAMP}, #{cancelTime,jdbcType=TIMESTAMP}, #{isPayed,jdbcType=BIT}, 
+      #{deleteStatus,jdbcType=INTEGER}, #{refundSts,jdbcType=INTEGER}, #{orderType,jdbcType=TINYINT}, 
+      #{closeType,jdbcType=TINYINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.miaosha.miaoshaproduct.domain.entity.Order">
+    insert into t_order
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="orderId != null">
+        order_id,
+      </if>
+      <if test="productId != null">
+        product_id,
+      </if>
+      <if test="prodName != null">
+        prod_name,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="total != null">
+        total,
+      </if>
+      <if test="remarks != null">
+        remarks,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="productNums != null">
+        product_nums,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="payTime != null">
+        pay_time,
+      </if>
+      <if test="dvyTime != null">
+        dvy_time,
+      </if>
+      <if test="finallyTime != null">
+        finally_time,
+      </if>
+      <if test="cancelTime != null">
+        cancel_time,
+      </if>
+      <if test="isPayed != null">
+        is_payed,
+      </if>
+      <if test="deleteStatus != null">
+        delete_status,
+      </if>
+      <if test="refundSts != null">
+        refund_sts,
+      </if>
+      <if test="orderType != null">
+        order_type,
+      </if>
+      <if test="closeType != null">
+        close_type,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="orderId != null">
+        #{orderId,jdbcType=BIGINT},
+      </if>
+      <if test="productId != null">
+        #{productId,jdbcType=BIGINT},
+      </if>
+      <if test="prodName != null">
+        #{prodName,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="total != null">
+        #{total,jdbcType=DECIMAL},
+      </if>
+      <if test="remarks != null">
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="productNums != null">
+        #{productNums,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="payTime != null">
+        #{payTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="dvyTime != null">
+        #{dvyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="finallyTime != null">
+        #{finallyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="cancelTime != null">
+        #{cancelTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isPayed != null">
+        #{isPayed,jdbcType=BIT},
+      </if>
+      <if test="deleteStatus != null">
+        #{deleteStatus,jdbcType=INTEGER},
+      </if>
+      <if test="refundSts != null">
+        #{refundSts,jdbcType=INTEGER},
+      </if>
+      <if test="orderType != null">
+        #{orderType,jdbcType=TINYINT},
+      </if>
+      <if test="closeType != null">
+        #{closeType,jdbcType=TINYINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.miaosha.miaoshaproduct.domain.entity.Order">
+    update t_order
+    <set>
+      <if test="productId != null">
+        product_id = #{productId,jdbcType=BIGINT},
+      </if>
+      <if test="prodName != null">
+        prod_name = #{prodName,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="total != null">
+        total = #{total,jdbcType=DECIMAL},
+      </if>
+      <if test="remarks != null">
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="productNums != null">
+        product_nums = #{productNums,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="payTime != null">
+        pay_time = #{payTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="dvyTime != null">
+        dvy_time = #{dvyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="finallyTime != null">
+        finally_time = #{finallyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="cancelTime != null">
+        cancel_time = #{cancelTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isPayed != null">
+        is_payed = #{isPayed,jdbcType=BIT},
+      </if>
+      <if test="deleteStatus != null">
+        delete_status = #{deleteStatus,jdbcType=INTEGER},
+      </if>
+      <if test="refundSts != null">
+        refund_sts = #{refundSts,jdbcType=INTEGER},
+      </if>
+      <if test="orderType != null">
+        order_type = #{orderType,jdbcType=TINYINT},
+      </if>
+      <if test="closeType != null">
+        close_type = #{closeType,jdbcType=TINYINT},
+      </if>
+    </set>
+    where order_id = #{orderId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.miaosha.miaoshaproduct.domain.entity.Order">
+    update t_order
+    set product_id = #{productId,jdbcType=BIGINT},
+      prod_name = #{prodName,jdbcType=VARCHAR},
+      user_id = #{userId,jdbcType=VARCHAR},
+      total = #{total,jdbcType=DECIMAL},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      status = #{status,jdbcType=INTEGER},
+      product_nums = #{productNums,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      pay_time = #{payTime,jdbcType=TIMESTAMP},
+      dvy_time = #{dvyTime,jdbcType=TIMESTAMP},
+      finally_time = #{finallyTime,jdbcType=TIMESTAMP},
+      cancel_time = #{cancelTime,jdbcType=TIMESTAMP},
+      is_payed = #{isPayed,jdbcType=BIT},
+      delete_status = #{deleteStatus,jdbcType=INTEGER},
+      refund_sts = #{refundSts,jdbcType=INTEGER},
+      order_type = #{orderType,jdbcType=TINYINT},
+      close_type = #{closeType,jdbcType=TINYINT}
+    where order_id = #{orderId,jdbcType=BIGINT}
+  </update>
+</mapper>
