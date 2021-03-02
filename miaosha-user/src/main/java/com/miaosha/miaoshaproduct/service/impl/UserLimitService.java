@@ -34,7 +34,7 @@ public class UserLimitService {
     private OrderFeignService orderFeignService;
 
     // 限流与阻塞处理
-    @SentinelResource(value = "userLimit", blockHandler = "exceptionHandler",fallback = "userPlaceOrderFallback")
+    @SentinelResource(value = "userLimit", blockHandler = "exceptionHandler", fallback = "userPlaceOrderFallback")
     public String userLimit(String productId) {
         ProductDTO productDTO = productFeignService.findProductById(Long.valueOf(productId));
         OrderDTO orderDTO = new OrderDTO();
@@ -53,12 +53,12 @@ public class UserLimitService {
     }
 
 
-    public String exceptionHandler(String productId,BlockException ex) {
-        ex.printStackTrace();
+    public String exceptionHandler(String productId, BlockException ex) {
+        //ex.printStackTrace();
         return "userLimit;被限流了";
     }
 
-    public String userPlaceOrderFallback(String productId){
+    public String userPlaceOrderFallback(String productId) {
         return "fallback";
     }
 
