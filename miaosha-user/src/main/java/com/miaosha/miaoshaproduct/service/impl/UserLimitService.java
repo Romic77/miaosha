@@ -55,6 +55,7 @@ public class UserLimitService {
 
     public String exceptionHandler(String productId, BlockException ex) {
         //ex.printStackTrace();
+        logger.error("userLimit;被限流了");
         return "userLimit;被限流了";
     }
 
