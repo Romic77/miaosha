@@ -1,6 +1,7 @@
 package com.miaosha.miaoshaproduct.service.impl;
 
 import com.miaosha.miaoshaproduct.domain.dao.ProductMapper;
+import com.miaosha.miaoshaproduct.domain.dto.ProductDTO;
 import com.miaosha.miaoshaproduct.domain.entity.Product;
 import com.miaosha.miaoshaproduct.service.IProductService;
 import com.miaosha.miaoshaproduct.service.LeafFeignService;
@@ -19,7 +20,7 @@ public class ProductServiceImpl implements IProductService {
     @Autowired
     private ProductMapper productMapper;
 
-    public String insertProduct(Product product) throws Exception {
+    public String insertProduct(ProductDTO product) throws Exception {
         String id=leafFeignService.getSegmentId("leaf-segment-product");
         if(StringUtils.isBlank(id)){
             throw new Exception("leafFeignService获取id为空,检查leaf服务器");
@@ -27,5 +28,10 @@ public class ProductServiceImpl implements IProductService {
         product.setProductId(Long.valueOf(id));
         productMapper.insert(product);
         return product.toString();
+    }
+
+    @Override
+    public Product findProductById(Long productId) {
+        return productMapper.selectByPrimaryKey(productId);
     }
 }

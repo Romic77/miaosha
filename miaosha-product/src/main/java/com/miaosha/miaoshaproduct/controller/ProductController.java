@@ -1,8 +1,10 @@
 package com.miaosha.miaoshaproduct.controller;
 
+import com.miaosha.miaoshaproduct.domain.dto.ProductDTO;
 import com.miaosha.miaoshaproduct.domain.entity.Product;
 import com.miaosha.miaoshaproduct.service.IProductService;
 import com.xkzhangsan.time.converter.DateTimeConverterUtil;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -26,7 +28,7 @@ public class ProductController {
     @RequestMapping("/insert/product")
     public String insertProduct() throws Exception {
 
-        Product product=new Product();
+        ProductDTO product=new ProductDTO();
         product.setProductName("台式电脑");
         product.setProductPrice(new BigDecimal("5888.00"));
         product.setContent("支持LOL");
@@ -34,5 +36,14 @@ public class ProductController {
         product.setCreateTime(DateTimeConverterUtil.toDate(LocalDateTime.now()));
         return productService.insertProduct(product);
     }
+
+    @RequestMapping("/product/findProductById")
+    public ProductDTO insertProduct(Long productId) throws Exception {
+        Product product=productService.findProductById(productId);
+        ProductDTO productDTO = null;
+        BeanUtils.copyProperties(product,productDTO);
+        return productDTO;
+    }
+
 
 }

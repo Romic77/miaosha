@@ -5,8 +5,8 @@
 
 <generatorConfiguration>
     <!--指定特定数据库的jdbc驱动jar包的位置-->
-    <!--<classPathEntry location="/Users/chenqi/maven/repo/mysql/mysql-connector-java/8.0.11/mysql-connector-java-8.0.11.jar"/>-->
-    <classPathEntry location="E:\Program Files\apache-maven-3.6.3\repo\mysql\mysql-connector-java\8.0.11\mysql-connector-java-8.0.11.jar"/>
+    <classPathEntry location="/Users/chenqi/maven/repo/mysql/mysql-connector-java/8.0.11/mysql-connector-java-8.0.11.jar"/>
+    <!--<classPathEntry location="E:\Program Files\apache-maven-3.6.3\repo\mysql\mysql-connector-java\8.0.11\mysql-connector-java-8.0.11.jar"/>-->
 
 
     <!-- 选择运行的mybatis版本 -->
