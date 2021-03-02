@@ -1,9 +1,9 @@
-package com.miaosha.miaoshaproduct.domain.entity;
+package com.miaosha.miaoshaproduct.domain.dto;
 
 import java.math.BigDecimal;
 import java.util.Date;
 
-public class Product {
+public class ProductDTO {
     private Long productId;
 
     private String productName;
@@ -18,7 +18,7 @@ public class Product {
 
     private String content;
 
-    public Product(Long productId, String productName, BigDecimal productPrice, Integer totalStocks, Date createTime, Date updateTime) {
+    public ProductDTO(Long productId, String productName, BigDecimal productPrice, Integer totalStocks, Date createTime, Date updateTime) {
         this.productId = productId;
         this.productName = productName;
         this.productPrice = productPrice;
@@ -27,7 +27,7 @@ public class Product {
         this.updateTime = updateTime;
     }
 
-    public Product(Long productId, String productName, BigDecimal productPrice, Integer totalStocks, Date createTime, Date updateTime, String content) {
+    public ProductDTO(Long productId, String productName, BigDecimal productPrice, Integer totalStocks, Date createTime, Date updateTime, String content) {
         this.productId = productId;
         this.productName = productName;
         this.productPrice = productPrice;
@@ -37,7 +37,7 @@ public class Product {
         this.content = content;
     }
 
-    public Product() {
+    public ProductDTO() {
         super();
     }
 

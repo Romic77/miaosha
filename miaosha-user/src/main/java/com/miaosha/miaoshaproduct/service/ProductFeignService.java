@@ -1,5 +1,6 @@
 package com.miaosha.miaoshaproduct.service;
 
+import com.miaosha.miaoshaproduct.domain.dto.ProductDTO;
 import com.miaosha.miaoshaproduct.domain.entity.Product;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,6 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public interface ProductFeignService {
 
     @RequestMapping("/product/findProductById")
-    public Product findProductById(Long productId);
+    public ProductDTO findProductById(Long productId);
 
 }

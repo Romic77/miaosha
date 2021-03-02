@@ -8,5 +8,5 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @FeignClient("miaosha-order")
 public interface OrderFeignService {
     @RequestMapping("/order/placeOrder")
-    public boolean placeOrder(OrderDTO orderDTO);
+    public String placeOrder(OrderDTO orderDTO);
 }
