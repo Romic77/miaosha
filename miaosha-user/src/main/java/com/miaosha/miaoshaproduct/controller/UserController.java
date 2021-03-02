@@ -52,7 +52,7 @@ public class UserController {
      * @author chenqi
      * @date 2021/3/1 15:13
      */
-    @RequestMapping(value = "/user/placeOrder", method = RequestMethod.GET)
+    @RequestMapping(value = "/user/placeOrder", method = RequestMethod.POST)
     public String placeOrder(String productId) {
         //1. 限流 熔断 降级 限制90%的用户
 

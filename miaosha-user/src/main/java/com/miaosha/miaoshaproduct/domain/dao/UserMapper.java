@@ -1,7 +1,9 @@
 package com.miaosha.miaoshaproduct.domain.dao;
 
 import com.miaosha.miaoshaproduct.domain.entity.User;
+import org.apache.ibatis.annotations.Mapper;
 
+@Mapper
 public interface UserMapper {
     int deleteByPrimaryKey(Long userId);
 

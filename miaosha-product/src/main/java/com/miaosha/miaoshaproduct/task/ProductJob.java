@@ -1,7 +1,8 @@
 package com.miaosha.miaoshaproduct.task;
 
 import com.miaosha.miaoshaproduct.domain.dao.ProductMapper;
-import com.miaosha.miaoshaproduct.domain.dto.ProductDTO;
+
+import com.miaosha.miaoshaproduct.domain.entity.Product;
 import com.xxl.job.core.context.XxlJobHelper;
 import com.xxl.job.core.handler.annotation.XxlJob;
 import org.redisson.api.RBucket;
@@ -33,7 +34,7 @@ public class ProductJob {
         XxlJobHelper.log("任务参数为:{}",XxlJobHelper.getJobParam());
         String productId=XxlJobHelper.getJobParam();
 
-        ProductDTO product = productMapper.selectByPrimaryKey(Long.valueOf(productId));
+        Product product = productMapper.selectByPrimaryKey(Long.valueOf(productId));
         if (product == null) {
             XxlJobHelper.log("该产品不存在,请确认productId");
             return;

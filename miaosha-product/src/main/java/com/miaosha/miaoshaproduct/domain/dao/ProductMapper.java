@@ -4,6 +4,7 @@ import com.miaosha.miaoshaproduct.domain.dto.ProductDTO;
 import com.miaosha.miaoshaproduct.domain.entity.Product;
 import org.apache.ibatis.annotations.Mapper;
 
+
 @Mapper
 public interface ProductMapper {
     int deleteByPrimaryKey(Long productId);
