@@ -1,11 +1,10 @@
 package com.miaosha.miaoshaproduct.task;
 
 import com.miaosha.miaoshaproduct.domain.dao.ProductMapper;
-
 import com.miaosha.miaoshaproduct.domain.entity.Product;
 import com.xxl.job.core.context.XxlJobHelper;
 import com.xxl.job.core.handler.annotation.XxlJob;
-import org.redisson.api.RBucket;
+import org.redisson.api.RAtomicLong;
 import org.redisson.api.RedissonClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -39,7 +38,7 @@ public class ProductJob {
             XxlJobHelper.log("该产品不存在,请确认productId");
             return;
         }
-        RBucket<Integer> result = redissonClient.getBucket(productId);
+        RAtomicLong result = redissonClient.getAtomicLong(productId);
         if (!result.isExists()) {
             result.set(product.getTotalStocks());
         }

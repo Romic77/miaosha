@@ -9,7 +9,9 @@ import org.redisson.api.RedissonClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -25,12 +27,15 @@ public class OrderController {
     @Autowired
     private IOrderService orderService;
 
-    @RequestMapping("/order/placeOrder")
-    public CommonResult placeOrder(OrderDTO orderDTO) {
-        RAtomicLong atomicVar  = redissonClient.getAtomicLong(orderDTO.getProductId()+"");
+    @RequestMapping(value = "/order/placeOrder", method = RequestMethod.POST,
+            produces = "application/json; charset=UTF-8", consumes = "application/json;charset=UTF-8")
+    public CommonResult placeOrder(@RequestBody OrderDTO orderDTO) {
+        String productId = orderDTO.getProductId() + "";
+        RAtomicLong atomicVar = redissonClient.getAtomicLong(productId);
         // 多线程调用 线程安全
         long stock = atomicVar.get();
-        if(stock <0){
+
+        if (stock < 0) {
             return CommonResult.failed("库存不足,秒杀结束");
         }
         orderService.placeOrder(orderDTO);

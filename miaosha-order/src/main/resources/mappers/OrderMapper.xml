@@ -5,7 +5,7 @@
     <constructor>
       <idArg column="order_id" javaType="java.lang.Long" jdbcType="BIGINT" />
       <arg column="product_id" javaType="java.lang.Long" jdbcType="BIGINT" />
-      <arg column="prod_name" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="product_name" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="user_id" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="total" javaType="java.math.BigDecimal" jdbcType="DECIMAL" />
       <arg column="remarks" javaType="java.lang.String" jdbcType="VARCHAR" />
@@ -25,7 +25,7 @@
     </constructor>
   </resultMap>
   <sql id="Base_Column_List">
-    order_id, product_id, prod_name, user_id, total, remarks, status, product_nums, create_time, 
+    order_id, product_id, product_name, user_id, total, remarks, status, product_nums, create_time, 
     update_time, pay_time, dvy_time, finally_time, cancel_time, is_payed, delete_status, 
     refund_sts, order_type, close_type
   </sql>
@@ -40,14 +40,14 @@
     where order_id = #{orderId,jdbcType=BIGINT}
   </delete>
   <insert id="insert" parameterType="com.miaosha.miaoshaproduct.domain.entity.Order">
-    insert into t_order (order_id, product_id, prod_name, 
+    insert into t_order (order_id, product_id, product_name, 
       user_id, total, remarks, 
       status, product_nums, create_time, 
       update_time, pay_time, dvy_time, 
       finally_time, cancel_time, is_payed, 
       delete_status, refund_sts, order_type, 
       close_type)
-    values (#{orderId,jdbcType=BIGINT}, #{productId,jdbcType=BIGINT}, #{prodName,jdbcType=VARCHAR}, 
+    values (#{orderId,jdbcType=BIGINT}, #{productId,jdbcType=BIGINT}, #{productName,jdbcType=VARCHAR},
       #{userId,jdbcType=VARCHAR}, #{total,jdbcType=DECIMAL}, #{remarks,jdbcType=VARCHAR}, 
       #{status,jdbcType=INTEGER}, #{productNums,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, 
       #{updateTime,jdbcType=TIMESTAMP}, #{payTime,jdbcType=TIMESTAMP}, #{dvyTime,jdbcType=TIMESTAMP}, 
@@ -64,8 +64,8 @@
       <if test="productId != null">
         product_id,
       </if>
-      <if test="prodName != null">
-        prod_name,
+      <if test="productName != null">
+        product_name,
       </if>
       <if test="userId != null">
         user_id,
@@ -123,8 +123,8 @@
       <if test="productId != null">
         #{productId,jdbcType=BIGINT},
       </if>
-      <if test="prodName != null">
-        #{prodName,jdbcType=VARCHAR},
+      <if test="productName != null">
+        #{productName,jdbcType=VARCHAR},
       </if>
       <if test="userId != null">
         #{userId,jdbcType=VARCHAR},
@@ -182,8 +182,8 @@
       <if test="productId != null">
         product_id = #{productId,jdbcType=BIGINT},
       </if>
-      <if test="prodName != null">
-        prod_name = #{prodName,jdbcType=VARCHAR},
+      <if test="productName != null">
+        product_name = #{productName,jdbcType=VARCHAR},
       </if>
       <if test="userId != null">
         user_id = #{userId,jdbcType=VARCHAR},
@@ -239,7 +239,7 @@
   <update id="updateByPrimaryKey" parameterType="com.miaosha.miaoshaproduct.domain.entity.Order">
     update t_order
     set product_id = #{productId,jdbcType=BIGINT},
-      prod_name = #{prodName,jdbcType=VARCHAR},
+      product_name = #{productName,jdbcType=VARCHAR},
       user_id = #{userId,jdbcType=VARCHAR},
       total = #{total,jdbcType=DECIMAL},
       remarks = #{remarks,jdbcType=VARCHAR},

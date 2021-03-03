@@ -3,12 +3,10 @@ package com.miaosha.miaoshaproduct.service.impl;
 
 import com.alibaba.csp.sentinel.annotation.SentinelResource;
 import com.alibaba.csp.sentinel.slots.block.BlockException;
-import com.alibaba.csp.sentinel.slots.block.RuleConstant;
-import com.alibaba.csp.sentinel.slots.block.flow.FlowRule;
-import com.alibaba.csp.sentinel.slots.block.flow.FlowRuleManager;
 import com.google.common.util.concurrent.ListeningExecutorService;
 import com.miaosha.miaoshaproduct.domain.dto.OrderDTO;
 import com.miaosha.miaoshaproduct.domain.dto.ProductDTO;
+import com.miaosha.miaoshaproduct.domain.entity.User;
 import com.miaosha.miaoshaproduct.service.IUserService;
 import com.miaosha.miaoshaproduct.service.OrderFeignService;
 import com.miaosha.miaoshaproduct.service.ProductFeignService;
@@ -21,8 +19,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 @Service
 public class UserLimitService {
@@ -53,16 +49,23 @@ public class UserLimitService {
         ProductDTO productDTO = productDTOCommonResult.getData();
         OrderDTO orderDTO = new OrderDTO();
         orderDTO.setProductId(Long.valueOf(productId));
-        orderDTO.setUserId(iUserService.findUserById(1l) + "");
+        orderDTO.setProdName(productDTO.getProductName());
+        User user = iUserService.findUserById(1l);
+        if (user == null) {
+            return CommonResult.failed("findUserById error");
+        }
+        orderDTO.setUserId(user.getUserId() + "");
         orderDTO.setCreateTime(DateTimeConverterUtil.toDate(LocalDateTime.now()));
         orderDTO.setProductNums(1);
         orderDTO.setStatus(2);
         orderDTO.setTotal(productDTO.getProductPrice());
 
+        orderFeignService.placeOrder(orderDTO);
+
         // 多线程处理-用户下单
-        listeningExecutorService.submit(() -> {
+        /*listeningExecutorService.submit(() -> {
             orderFeignService.placeOrder(orderDTO);
-        });
+        });*/
         return CommonResult.success(null);
     }
 
@@ -85,19 +88,8 @@ public class UserLimitService {
      * @author chenqi
      * @date 2021/3/3 10:19
      */
-    public CommonResult userPlaceOrderFallback(String productId){
+    public CommonResult userPlaceOrderFallback(String productId) {
         logger.error("userLimit;被降级了");
         return new CommonResult(ResultCode.REQUEST_FALLBACK.getCode(), ResultCode.REQUEST_FALLBACK.getMessage(), "userLimit-userPlaceOrderFallback");
-    }
-
-    public static void initRule() {
-        List<FlowRule> rules = new ArrayList<>();
-        FlowRule rule = new FlowRule();
-        rule.setResource("hello");
-        //使用QPS的方式
-        rule.setGrade(RuleConstant.FLOW_GRADE_QPS);
-        rule.setCount(2);
-        rules.add(rule);
-        FlowRuleManager.loadRules(rules);
     }
 }
