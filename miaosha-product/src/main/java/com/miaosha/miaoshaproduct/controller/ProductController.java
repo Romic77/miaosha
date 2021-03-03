@@ -49,13 +49,12 @@ public class ProductController {
     @RequestMapping("/product/findProductById")
     public CommonResult<ProductDTO> insertProduct(@RequestParam("productId") Long productId) throws Exception {
         try {
-
             Product product = productService.findProductById(productId);
             ProductDTO productDTO = new ProductDTO();
             BeanUtils.copyProperties(product, productDTO);
             return CommonResult.success(productDTO);
         } catch (Exception e) {
-            logger.error("Invoking productService cause ercror,  {}", e);
+            logger.error("Invoking productService cause ercror:{}", e);
 
             return CommonResult.failed("product服务异常");
         }
