@@ -60,9 +60,9 @@ public class UserLimitService {
         orderDTO.setTotal(productDTO.getProductPrice());
 
         // 多线程处理-用户下单
-        /*listeningExecutorService.submit(() -> {
+        listeningExecutorService.submit(() -> {
             orderFeignService.placeOrder(orderDTO);
-        });*/
+        });
         return CommonResult.success(null);
     }
 
