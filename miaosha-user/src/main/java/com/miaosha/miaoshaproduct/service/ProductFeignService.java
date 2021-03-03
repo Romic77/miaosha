@@ -13,10 +13,10 @@ import org.springframework.web.bind.annotation.RequestParam;
  * @Description:
  * @Date: Created in 2021-03-02 09:52
  */
-@FeignClient(value="miaosha-product",fallback = ProductServiceFallBack.class)
+@FeignClient(value = "miaosha-product", fallback = ProductServiceFallBack.class)
 public interface ProductFeignService {
 
     @RequestMapping("/product/findProductById")
-    public CommonResult<ProductDTO> findProductById(@RequestParam("productId")Long productId);
+    public CommonResult<ProductDTO> findProductById(@RequestParam("productId") Long productId);
 
 }
