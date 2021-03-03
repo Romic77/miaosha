@@ -183,3 +183,14 @@ curl http://localhost:8080/api/snowflake/get/test
   - startup.cmd -m standalone
 
 ## xxl-job分布式调度中心
+
+
+
+
+
+| 应用               | 端口 |
+| ------------------ | ---- |
+| leaf-server        | 8081 |
+| sentinel-dashboard | 8082 |
+| xxl-job-admin      | 8082 |
+

@@ -47,7 +47,7 @@ public class UserController {
      * @date 2021/3/1 15:13
      */
     @RequestMapping(value = "/user/placeOrder", method = RequestMethod.POST, produces = "application/json; charset=utf-8")
-    public CommonResult placeOrder(String productId) throws Exception {
+    public CommonResult placeOrder(String productId) {
         CommonResult<ProductDTO> productDTOCommonResult = productFeignService.findProductById(Long.valueOf(productId));
         ProductDTO productDTO = productDTOCommonResult.getData();
         if (productDTOCommonResult.getCode() != 200) {
@@ -63,10 +63,11 @@ public class UserController {
         });
         listenableFuture.get();*/
 
-        listeningExecutorService.submit(()->{
+        listeningExecutorService.submit(() -> {
             orderFeignService.placeOrder(commonResult.getData());
         });
         return CommonResult.success(null);
+
     }
 
 

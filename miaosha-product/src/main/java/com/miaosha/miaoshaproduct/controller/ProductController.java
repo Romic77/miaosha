@@ -5,6 +5,8 @@ import com.miaosha.miaoshaproduct.domain.entity.Product;
 import com.miaosha.miaoshaproduct.service.IProductService;
 import com.miaosha.miaoshaproduct.utils.CommonResult;
 import com.xkzhangsan.time.converter.DateTimeConverterUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,6 +18,11 @@ import java.time.LocalDateTime;
 
 @RestController
 public class ProductController {
+    /**
+     * logger
+     */
+    private static final Logger logger = LoggerFactory.getLogger(ProductController.class);
+
     @Autowired
     private IProductService productService;
 
@@ -41,11 +48,17 @@ public class ProductController {
 
     @RequestMapping("/product/findProductById")
     public CommonResult<ProductDTO> insertProduct(@RequestParam("productId") Long productId) throws Exception {
-        int a = 1 % 0;
-        Product product = productService.findProductById(productId);
-        ProductDTO productDTO = new ProductDTO();
-        BeanUtils.copyProperties(product, productDTO);
-        return CommonResult.success(productDTO);
+        try {
+
+            Product product = productService.findProductById(productId);
+            ProductDTO productDTO = new ProductDTO();
+            BeanUtils.copyProperties(product, productDTO);
+            return CommonResult.success(productDTO);
+        } catch (Exception e) {
+            logger.error("Invoking productService cause ercror,  {}", e);
+
+            return CommonResult.failed("product服务异常");
+        }
     }
 
 
