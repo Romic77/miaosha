@@ -1,7 +1,5 @@
 package com.miaosha.miaoshaproduct.service.impl;
 
-import com.miaosha.miaoshaproduct.domain.dao.UserMapper;
-import com.miaosha.miaoshaproduct.domain.entity.User;
 import com.miaosha.miaoshaproduct.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

@@ -16,6 +16,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Service
@@ -45,6 +46,9 @@ public class UserLimitService {
         User user = iUserService.findUserById(1l);
         if (user == null) {
             return CommonResult.failed("findUserById error");
+        }
+        if (user.getBalance().compareTo(new BigDecimal("0")) == -1) {
+            return CommonResult.failed(user.getUsername() + ":用户余额不足,请充值");
         }
         orderDTO.setUserId(user.getUserId() + "");
         orderDTO.setCreateTime(DateTimeConverterUtil.toDate(LocalDateTime.now()));

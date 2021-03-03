@@ -48,11 +48,12 @@ public class UserController {
      */
     @RequestMapping(value = "/user/placeOrder", method = RequestMethod.POST, produces = "application/json; charset=utf-8")
     public CommonResult placeOrder(String productId) {
+
         CommonResult<ProductDTO> productDTOCommonResult = productFeignService.findProductById(Long.valueOf(productId));
-        ProductDTO productDTO = productDTOCommonResult.getData();
         if (productDTOCommonResult.getCode() != 200) {
             return productDTOCommonResult;
         }
+        ProductDTO productDTO = productDTOCommonResult.getData();
 
         CommonResult<OrderDTO> commonResult = userLimitService.userLimit(productDTO);
 

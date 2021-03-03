@@ -6,12 +6,13 @@ CREATE TABLE `t_user` (
   `user_id` bigint(20) NOT NULL COMMENT '主键',
   `username` varchar(255)  DEFAULT NULL,
   `login_password` varchar(255) DEFAULT NULL COMMENT '登陆密码',
+  `balance` decimal(15,2) DEFAULT '0.00' COMMENT '用户余额',
   `status` int(1) DEFAULT NULL COMMENT '状态 1 正常 0 无效',
   `user_regtime` datetime DEFAULT NULL COMMENT '注册时间',
   PRIMARY KEY (`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
-INSERT INTO `t_user`(`user_id`, `username`, `login_password`, `status`, `user_regtime`) VALUES (1, 'zhangsan', '123456', 1, '2021-02-28 22:24:01');
+INSERT INTO `t_user`(`user_id`, `username`, `login_password`, `status`, `user_regtime`) VALUES (1, 'zhangsan', '123456',666666.66, 1, '2021-02-28 22:24:01');
 
 
 CREATE TABLE `t_product` (
