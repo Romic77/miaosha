@@ -30,7 +30,7 @@ public class ProductController {
     @RequestMapping("/insert/product")
     public String insertProduct() throws Exception {
 
-        ProductDTO product=new ProductDTO();
+        ProductDTO product = new ProductDTO();
         product.setProductName("台式电脑");
         product.setProductPrice(new BigDecimal("5888.00"));
         product.setContent("支持LOL");
@@ -40,10 +40,11 @@ public class ProductController {
     }
 
     @RequestMapping("/product/findProductById")
-    public CommonResult<ProductDTO> insertProduct(@RequestParam("productId")Long productId) throws Exception {
-        Product product=productService.findProductById(productId);
+    public CommonResult<ProductDTO> insertProduct(@RequestParam("productId") Long productId) throws Exception {
+        int a = 1 % 0;
+        Product product = productService.findProductById(productId);
         ProductDTO productDTO = new ProductDTO();
-        BeanUtils.copyProperties(product,productDTO);
+        BeanUtils.copyProperties(product, productDTO);
         return CommonResult.success(productDTO);
     }
 

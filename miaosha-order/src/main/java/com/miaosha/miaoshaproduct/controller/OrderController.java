@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Arrays;
+
 @RestController
 public class OrderController {
     /**
@@ -30,19 +32,25 @@ public class OrderController {
     @RequestMapping(value = "/order/placeOrder", method = RequestMethod.POST,
             produces = "application/json; charset=UTF-8", consumes = "application/json;charset=UTF-8")
     public CommonResult placeOrder(@RequestBody OrderDTO orderDTO) {
-        String productId = orderDTO.getProductId() + "";
-        RAtomicLong atomicVar = redissonClient.getAtomicLong(productId);
-        // 多线程调用 线程安全
-        long stock = atomicVar.get();
+        try {
 
-        if (stock < 0) {
-            return CommonResult.failed("库存不足,秒杀结束");
+            String productId = orderDTO.getProductId() + "";
+            RAtomicLong atomicVar = redissonClient.getAtomicLong(productId);
+            // 多线程调用 线程安全
+            long stock = atomicVar.get();
+
+            if (stock < 0) {
+                return CommonResult.failed("库存不足,秒杀结束");
+            }
+            orderService.placeOrder(orderDTO);
+
+            //调用消息中间件rocketMQ进行库存扣减
+
+
+            return CommonResult.success(null);
+        } catch (Exception e) {
+            logger.error(Arrays.toString(e.getStackTrace()));
+            return CommonResult.failed("placeOrder业务异常");
         }
-        orderService.placeOrder(orderDTO);
-
-        //调用消息中间件rocketMQ进行库存扣减
-
-
-        return CommonResult.success(null);
     }
 }
