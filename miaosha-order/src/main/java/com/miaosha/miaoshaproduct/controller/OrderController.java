@@ -14,8 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Arrays;
-
 @RestController
 public class OrderController {
     /**
@@ -49,7 +47,7 @@ public class OrderController {
 
             return CommonResult.success(null);
         } catch (Exception e) {
-            logger.error(Arrays.toString(e.getStackTrace()));
+            logger.error("订单服务异常: ", e);
             return CommonResult.failed("placeOrder业务异常");
         }
     }

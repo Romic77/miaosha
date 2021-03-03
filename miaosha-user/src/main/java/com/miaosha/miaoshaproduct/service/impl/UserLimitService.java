@@ -37,27 +37,30 @@ public class UserLimitService {
      * @param productId
      * @return
      */
-    @SentinelResource(value = "userLimit", blockHandler = "exceptionHandler", fallback = "userPlaceOrderFallback")
+    @SentinelResource(value = "userLimit",  blockHandler = "exceptionHandler", fallback = "userPlaceOrderFallback")
     public CommonResult<OrderDTO> userLimit(ProductDTO productDTO) {
+        try {
+            OrderDTO orderDTO = new OrderDTO();
+            orderDTO.setProductId(productDTO.getProductId());
+            orderDTO.setProductName(productDTO.getProductName());
+            User user = iUserService.findUserById(1l);
+            if (user == null) {
+                return CommonResult.failed("findUserById error");
+            }
+            if (user.getBalance().compareTo(new BigDecimal("0")) < 0) {
+                return CommonResult.failed(user.getUsername() + ":用户余额不足,请充值");
+            }
+            orderDTO.setUserId(user.getUserId() + "");
+            orderDTO.setCreateTime(DateTimeConverterUtil.toDate(LocalDateTime.now()));
+            orderDTO.setProductNums(1);
+            orderDTO.setStatus(2);
+            orderDTO.setTotal(productDTO.getProductPrice());
 
-        OrderDTO orderDTO = new OrderDTO();
-        orderDTO.setProductId(productDTO.getProductId());
-        orderDTO.setProductName(productDTO.getProductName());
-        User user = iUserService.findUserById(1l);
-        if (user == null) {
-            return CommonResult.failed("findUserById error");
+            return CommonResult.success(orderDTO);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return CommonResult.failed("用户服务异常");
         }
-        if (user.getBalance().compareTo(new BigDecimal("0")) == -1) {
-            return CommonResult.failed(user.getUsername() + ":用户余额不足,请充值");
-        }
-        orderDTO.setUserId(user.getUserId() + "");
-        orderDTO.setCreateTime(DateTimeConverterUtil.toDate(LocalDateTime.now()));
-        orderDTO.setProductNums(1);
-        orderDTO.setStatus(2);
-        orderDTO.setTotal(productDTO.getProductPrice());
-
-
-        return CommonResult.success(orderDTO);
     }
 
     /**

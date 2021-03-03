@@ -48,27 +48,30 @@ public class UserController {
      */
     @RequestMapping(value = "/user/placeOrder", method = RequestMethod.POST, produces = "application/json; charset=utf-8")
     public CommonResult placeOrder(String productId) {
+        try {
+            CommonResult<ProductDTO> productDTOCommonResult = productFeignService.findProductById(Long.valueOf(productId));
+            if (productDTOCommonResult.getCode() != 200) {
+                return productDTOCommonResult;
+            }
+            ProductDTO productDTO = productDTOCommonResult.getData();
 
-        CommonResult<ProductDTO> productDTOCommonResult = productFeignService.findProductById(Long.valueOf(productId));
-        if (productDTOCommonResult.getCode() != 200) {
-            return productDTOCommonResult;
-        }
-        ProductDTO productDTO = productDTOCommonResult.getData();
+            CommonResult<OrderDTO> commonResult = userLimitService.userLimit(productDTO);
 
-        CommonResult<OrderDTO> commonResult = userLimitService.userLimit(productDTO);
-
-        // 多线程处理-用户下单
-        //listeningExecutorService.submit();
+            // 多线程处理-用户下单
+            //listeningExecutorService.submit();
         /*final ListenableFuture<CommonResult> listenableFuture = (ListenableFuture<CommonResult>) listeningExecutorService.submit(() -> {
             orderFeignService.placeOrder(commonResult.getData());
         });
         listenableFuture.get();*/
 
-        listeningExecutorService.submit(() -> {
-            orderFeignService.placeOrder(commonResult.getData());
-        });
-        return CommonResult.success(null);
-
+            listeningExecutorService.submit(() -> {
+                orderFeignService.placeOrder(commonResult.getData());
+            });
+            return CommonResult.success(null);
+        } catch (Exception e) {
+            logger.error("用户服务异常;", e);
+            return CommonResult.failed("用户服务异常");
+        }
     }
 
 
