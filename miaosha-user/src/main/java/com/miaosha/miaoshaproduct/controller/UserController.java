@@ -4,9 +4,9 @@ package com.miaosha.miaoshaproduct.controller;
 import com.google.common.util.concurrent.ListeningExecutorService;
 import com.miaosha.miaoshaproduct.domain.dto.OrderDTO;
 import com.miaosha.miaoshaproduct.domain.dto.ProductDTO;
+import com.miaosha.miaoshaproduct.service.IUserService;
 import com.miaosha.miaoshaproduct.service.OrderFeignService;
 import com.miaosha.miaoshaproduct.service.ProductFeignService;
-import com.miaosha.miaoshaproduct.service.impl.UserLimitService;
 import com.miaosha.miaoshaproduct.utils.CommonResult;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,7 +28,7 @@ public class UserController {
     private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
     @Autowired
-    private UserLimitService userLimitService;
+    private IUserService userService;
 
     @Autowired
     private OrderFeignService orderFeignService;
@@ -55,7 +55,7 @@ public class UserController {
             }
             ProductDTO productDTO = productDTOCommonResult.getData();
 
-            CommonResult<OrderDTO> commonResult = userLimitService.userLimit(productDTO);
+            CommonResult<OrderDTO> commonResult = userService.userPlaceOrder(productDTO);
 
             // 多线程处理-用户下单
             //listeningExecutorService.submit();
@@ -73,6 +73,5 @@ public class UserController {
             return CommonResult.failed("用户服务异常");
         }
     }
-
 
 }

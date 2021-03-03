@@ -11,7 +11,10 @@ public enum ResultCode implements IErrorCode {
     UNAUTHORIZED(401, "暂未登录或token已经过期"),
     FORBIDDEN(403, "没有相关权限"),
     REQUEST_LIMIT(405,"请求量过大,限流了"),
-    REQUEST_FALLBACK(406,"请求量过大,降级了");
+    REQUEST_FALLBACK(406,"请求量过大,降级了"),
+    PARAM_FLOW(407,"热点参数限流"),
+    SYSTEM_BLOCK(408,"系统规则（负载不满足要求）;"),
+    REQUEST_AUTHORITY(409,"请求量过大,降级了");
     private long code;
     private String message;
 

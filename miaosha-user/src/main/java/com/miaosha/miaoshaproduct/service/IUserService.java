@@ -1,6 +1,8 @@
 package com.miaosha.miaoshaproduct.service;
 
-import com.miaosha.miaoshaproduct.domain.entity.User;
+import com.miaosha.miaoshaproduct.domain.dto.OrderDTO;
+import com.miaosha.miaoshaproduct.domain.dto.ProductDTO;
+import com.miaosha.miaoshaproduct.utils.CommonResult;
 
 /**
  * @Author: chenq
@@ -9,5 +11,5 @@ import com.miaosha.miaoshaproduct.domain.entity.User;
  */
 public interface IUserService {
 
-    public User findUserById(Long userId);
+    public CommonResult<OrderDTO> userPlaceOrder(ProductDTO productDTO);
 }
