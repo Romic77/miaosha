@@ -44,9 +44,10 @@ public class OrderServiceImpl implements IOrderService {
             logger.error("get leaf-segment-order failed,orderId:{}", orderId);
             return CommonResult.failed("get leaf-segment-order failed");
         }
+        order.setUserId(orderDTO.getUserId());
         order.setOrderId(orderId);
         order.setProductId(orderDTO.getProductId());
-        order.setProdName(orderDTO.getProdName());
+        order.setProductName(orderDTO.getProductName());
         order.setStatus(2);
         order.setCreateTime(DateTimeConverterUtil.toDate(LocalDateTime.now()));
         order.setProductNums(1);

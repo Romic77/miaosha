@@ -8,7 +8,7 @@ public class Order {
 
     private Long productId;
 
-    private String prodName;
+    private String productName;
 
     private String userId;
 
@@ -42,10 +42,10 @@ public class Order {
 
     private Byte closeType;
 
-    public Order(Long orderId, Long productId, String prodName, String userId, BigDecimal total, String remarks, Integer status, Integer productNums, Date createTime, Date updateTime, Date payTime, Date dvyTime, Date finallyTime, Date cancelTime, Boolean isPayed, Integer deleteStatus, Integer refundSts, Byte orderType, Byte closeType) {
+    public Order(Long orderId, Long productId, String productName, String userId, BigDecimal total, String remarks, Integer status, Integer productNums, Date createTime, Date updateTime, Date payTime, Date dvyTime, Date finallyTime, Date cancelTime, Boolean isPayed, Integer deleteStatus, Integer refundSts, Byte orderType, Byte closeType) {
         this.orderId = orderId;
         this.productId = productId;
-        this.prodName = prodName;
+        this.productName = productName;
         this.userId = userId;
         this.total = total;
         this.remarks = remarks;
@@ -84,12 +84,12 @@ public class Order {
         this.productId = productId;
     }
 
-    public String getProdName() {
-        return prodName;
+    public String getProductName() {
+        return productName;
     }
 
-    public void setProdName(String prodName) {
-        this.prodName = prodName == null ? null : prodName.trim();
+    public void setProductName(String productName) {
+        this.productName = productName == null ? null : productName.trim();
     }
 
     public String getUserId() {

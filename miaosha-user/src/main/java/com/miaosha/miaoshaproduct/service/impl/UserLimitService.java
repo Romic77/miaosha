@@ -49,7 +49,7 @@ public class UserLimitService {
         ProductDTO productDTO = productDTOCommonResult.getData();
         OrderDTO orderDTO = new OrderDTO();
         orderDTO.setProductId(Long.valueOf(productId));
-        orderDTO.setProdName(productDTO.getProductName());
+        orderDTO.setProductName(productDTO.getProductName());
         User user = iUserService.findUserById(1l);
         if (user == null) {
             return CommonResult.failed("findUserById error");
