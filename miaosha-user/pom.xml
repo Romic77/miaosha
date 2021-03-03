@@ -21,16 +21,9 @@
 
     <dependencies>
         <dependency>
-            <groupId>com.miaosha.miaoshaproduct</groupId>
-            <artifactId>miaosha-framework</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-        </dependency>
-
-        <dependency>
             <groupId>com.alibaba.cloud</groupId>
             <artifactId>spring-cloud-starter-alibaba-sentinel</artifactId>
         </dependency>
-
     </dependencies>
 
 

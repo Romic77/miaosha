@@ -3,10 +3,10 @@ package com.miaosha.miaoshaproduct.controller;
 import com.miaosha.miaoshaproduct.domain.dto.ProductDTO;
 import com.miaosha.miaoshaproduct.domain.entity.Product;
 import com.miaosha.miaoshaproduct.service.IProductService;
+import com.miaosha.miaoshaproduct.utils.CommonResult;
 import com.xkzhangsan.time.converter.DateTimeConverterUtil;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -40,11 +40,11 @@ public class ProductController {
     }
 
     @RequestMapping("/product/findProductById")
-    public ProductDTO insertProduct(@RequestParam("productId")Long productId) throws Exception {
+    public CommonResult<ProductDTO> insertProduct(@RequestParam("productId")Long productId) throws Exception {
         Product product=productService.findProductById(productId);
         ProductDTO productDTO = new ProductDTO();
         BeanUtils.copyProperties(product,productDTO);
-        return productDTO;
+        return CommonResult.success(productDTO);
     }
 
 
