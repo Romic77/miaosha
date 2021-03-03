@@ -11,5 +11,5 @@ import com.miaosha.miaoshaproduct.utils.CommonResult;
  */
 public interface IUserService {
 
-    public CommonResult<OrderDTO> userPlaceOrder(ProductDTO productDTO);
+    public CommonResult<OrderDTO> userPlaceOrder(ProductDTO productDTO) throws Exception;
 }

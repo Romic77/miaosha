@@ -34,8 +34,8 @@ public class UserServiceImpl implements IUserService {
      * @author chenqi
      * @date 2021/3/3 21:13
     */
-    public CommonResult<OrderDTO> userPlaceOrder(ProductDTO productDTO) {
-        try {
+    @Override
+    public CommonResult<OrderDTO> userPlaceOrder(ProductDTO productDTO) throws Exception {
             OrderDTO orderDTO = new OrderDTO();
             orderDTO.setProductId(productDTO.getProductId());
             orderDTO.setProductName(productDTO.getProductName());
@@ -53,9 +53,5 @@ public class UserServiceImpl implements IUserService {
             orderDTO.setTotal(productDTO.getProductPrice());
 
             return CommonResult.success(orderDTO);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return CommonResult.failed("用户服务异常");
-        }
     }
 }

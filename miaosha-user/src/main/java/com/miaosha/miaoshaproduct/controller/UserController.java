@@ -41,7 +41,8 @@ public class UserController {
 
     /**
      * 用户下订单
-     *
+     * 1. 配置了限流,并持久化到nacos上
+     * 2. 降级需要单独使用@SentinelResource,保证 参数一致 返回值一致
      * @return java.lang.String
      * @author chenqi
      * @date 2021/3/1 15:13

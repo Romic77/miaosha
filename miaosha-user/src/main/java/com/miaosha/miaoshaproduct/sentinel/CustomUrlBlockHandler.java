@@ -25,10 +25,8 @@ import javax.servlet.http.HttpServletResponse;
 
 @Service
 public class CustomUrlBlockHandler implements BlockExceptionHandler {
-
     @Override
     public void handle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, BlockException ex) throws Exception {
-        String msg = null;
         CommonResult commonResult = null;
         if (ex instanceof FlowException) {
             commonResult = new CommonResult(ResultCode.REQUEST_LIMIT.getCode(), ResultCode.REQUEST_LIMIT.getMessage(), null);
