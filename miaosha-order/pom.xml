@@ -21,6 +21,24 @@
 
 
   <dependencies>
+    <!--默认使用的是1.3的jar,但是我的版本是1.4需要重新引入-->
+    <dependency>
+      <groupId>com.alibaba.cloud</groupId>
+      <artifactId>spring-cloud-starter-alibaba-seata</artifactId>
+      <exclusions>
+        <exclusion>
+          <groupId>io.seata</groupId>
+          <artifactId>seata-spring-boot-starter</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>io.seata</groupId>
+      <artifactId>seata-spring-boot-starter</artifactId>
+      <version>1.4.0</version>
+    </dependency>
+
+
     <dependency>
       <groupId>com.miaosha.miaoshaproduct</groupId>
       <artifactId>miaosha-parent</artifactId>

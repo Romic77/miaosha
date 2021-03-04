@@ -10,7 +10,7 @@ mybatis:
   mapper-locations: classpath:mappers/*.xml
   type-aliases-package: com.miaosha.miaoshaproduct.domain.entity
 server:
-  port: 8091
+  port: 8093
 spring:
   application:
     name: miaosha-order
@@ -50,3 +50,25 @@ spring:
         min-idle: 4
     password: 123456
     port: 6379
+seata:
+  enabled: true
+  application-id: ${spring.application.name}
+  tx-service-group: miaosha_tx_group
+  enable-auto-data-source-proxy: true
+  config:
+    type: nacos
+    nacos:
+      namespace:
+      server-addr: 127.0.0.1:8848
+      group: SEATA_GROUP
+      userName: "nacos"
+      password: "nacos"
+  registry:
+    type: nacos
+    nacos:
+      application: seata-server
+      server-addr: 127.0.0.1:8848
+      namespace:
+      userName: "nacos"
+      password: "nacos"
+

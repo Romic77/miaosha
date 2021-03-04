@@ -7,6 +7,7 @@ import com.miaosha.miaoshaproduct.service.IOrderService;
 import com.miaosha.miaoshaproduct.service.LeafFeignService;
 import com.miaosha.miaoshaproduct.utils.CommonResult;
 import com.xkzhangsan.time.converter.DateTimeConverterUtil;
+import io.seata.spring.annotation.GlobalTransactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +31,7 @@ public class OrderServiceImpl implements IOrderService {
     @Autowired
     private OrderMapper orderMapper;
 
+
     /**
      * 用户下订单
      *
@@ -37,6 +39,8 @@ public class OrderServiceImpl implements IOrderService {
      * @author chenqi
      * @date 2021/3/3 13:15
      */
+    @Override
+    @GlobalTransactional(rollbackFor = Exception.class)
     public CommonResult placeOrder(OrderDTO orderDTO) {
         Order order = new Order();
         Long orderId = Long.valueOf(leafFeignService.getSegmentId("leaf-segment-order"));
