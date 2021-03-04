@@ -53,7 +53,7 @@ spring:
 seata:
   enabled: true
   application-id: ${spring.application.name}
-  tx-service-group: miaosha_tx_group
+  tx-service-group: miaosha-tx-group
   enable-auto-data-source-proxy: true
   config:
     type: nacos
@@ -71,4 +71,3 @@ seata:
       namespace:
       userName: "nacos"
       password: "nacos"
-

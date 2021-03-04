@@ -350,18 +350,25 @@ CREATE TABLE `undo_log` (
 
 ```
 
-## 启动seata-server服务
+### 启动seata-server服务
 
 > seata-1.4\bin目录下：双击 seata-server.bat
 > nacos中查看服务是否注册成功
 
 ![在这里插入图片描述](../images/20201214144224439.png)
 
-## seata-1.4.0.配置
+### seata-1.4.0.配置
 
-### 修改config.txt
+#### 修改config.txt
 
 > 路径：seata-1.4.0 路径下 script\config-center
+>
+> 注意: service.vgroupMapping.miaosha-tx-group=default,  对应的是springcloud的tx-service-group: miaosha-tx-group
+>
+> 
+>
+> service.vgroupMapping.sub-tx-group=default
+> service.vgroupMapping.miaosha-tx-group=default
 
 修改service.vgroupMapping和数据库地址
 
@@ -448,6 +455,69 @@ metrics.exporterPrometheusPort=9898
 
 service.vgroupMapping.sub-tx-group=default
 service.vgroupMapping.miaosha-tx-group=default
+
+## SpringCloud 配置
+
+### pom.xml
+
+注：seata-spring-boot-starter的版本与安装版本一致
+
+```xml
+<dependency>
+        <groupId>com.alibaba.cloud</groupId>
+        <artifactId>spring-cloud-starter-alibaba-seata</artifactId>
+        <exclusions>
+            <exclusion>
+                <groupId>io.seata</groupId>
+                <artifactId>seata-spring-boot-starter</artifactId>
+            </exclusion>
+        </exclusions>
+    </dependency>
+    <dependency>
+        <groupId>io.seata</groupId>
+        <artifactId>seata-spring-boot-starter</artifactId>
+        <version>1.4.0</version>
+    </dependency>
+
+
+```
+
+### 修改yml配置文件
+
+```yaml
+seata:
+  enabled: true
+  application-id: ${spring.application.name}
+  tx-service-group: miaosha-tx-group
+  enable-auto-data-source-proxy: true
+  config:
+    type: nacos
+    nacos:
+      namespace:
+      server-addr: 127.0.0.1:8848
+      group: SEATA_GROUP
+      userName: "nacos"
+      password: "nacos"
+  registry:
+    type: nacos
+    nacos:
+      application: seata-server
+      server-addr: 127.0.0.1:8848
+      namespace:
+      userName: "nacos"
+      password: "nacos"
+```
+
+### 代码上添加注解
+
+```
+application启动类上添加：
+@EnableAutoDataSourceProxy
+service上添加：
+@GlobalTransactional(rollbackFor = Exception.class)
+```
+
+
 
 ## shardingsphere
 
