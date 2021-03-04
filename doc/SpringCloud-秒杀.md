@@ -186,7 +186,16 @@ curl http://localhost:8080/api/snowflake/get/test
 
 
 
+## seata
 
+
+https://www.jianshu.com/p/a572045f28a5
+
+## shardingsphere
+
+
+
+springcloud nacos/feign/sentinel/getway/admin
 
 | 应用               | 端口 |
 | ------------------ | ---- |
