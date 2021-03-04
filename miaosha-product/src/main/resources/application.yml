@@ -34,7 +34,7 @@ spring:
       test-on-return: false
       test-while-idle: true
       time-between-eviction-runs-millis: 60000
-      url: jdbc:mysql://localhost:3306/miaosha?characterEncoding=utf8&useSSL=false&serverTimezone=UTC&rewriteBatchedStatements=true
+      url: jdbc:mysql://localhost:3306/miaosha_product?characterEncoding=utf8&useSSL=false&serverTimezone=UTC&rewriteBatchedStatements=true
       username: root
       validation-query: SELECT 'x'
     name: miaosha-product

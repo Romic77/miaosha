@@ -1,7 +1,8 @@
-create database IF NOT EXISTS `miaosha` default character set utf8 collate utf8_bin;
+create database IF NOT EXISTS `miaosha_user` default character set utf8 collate utf8_bin;
+create database IF NOT EXISTS `miaosha_order` default character set utf8 collate utf8_bin;
+create database IF NOT EXISTS `miaosha_product` default character set utf8 collate utf8_bin;
 
-USE miaosha;
-
+USE `miaosha_user`;
 CREATE TABLE `t_user` (
                           `user_id` bigint(20) NOT NULL COMMENT '主键',
                           `username` varchar(255)  DEFAULT NULL,
@@ -14,7 +15,7 @@ CREATE TABLE `t_user` (
 
 INSERT INTO `t_user`(`user_id`, `username`, `login_password`, `balance`,`status`, `user_regtime`) VALUES (1, 'zhangsan', '123456',666666.66, 1, '2021-02-28 22:24:01');
 
-
+USE `miaosha_product`;
 CREATE TABLE `t_product` (
                              `product_id` bigint(20)  NOT NULL  COMMENT '产品ID',
                              `product_name` varchar(300) NOT NULL DEFAULT '' COMMENT '商品名称',
@@ -28,7 +29,7 @@ CREATE TABLE `t_product` (
 
 INSERT INTO `t_product`(`product_id`, `product_name`, `product_price`, `content`,`total_stocks`, `create_time`) VALUES (2001, '电脑', 5000.00,'支持LOL',1000, '2021-02-28 22:24:01');
 
-
+USE `miaosha_order`;
 CREATE TABLE `t_order` (
                            `order_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '订单ID',
                            `product_id` bigint(20)  NOT NULL COMMENT '产品ID',
