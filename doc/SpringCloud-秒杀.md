@@ -192,5 +192,5 @@ curl http://localhost:8080/api/snowflake/get/test
 | ------------------ | ---- |
 | leaf-server        | 8081 |
 | sentinel-dashboard | 8082 |
-| xxl-job-admin      | 8082 |
+| xxl-job-admin      | 8084 |
 
