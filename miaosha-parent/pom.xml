@@ -27,11 +27,6 @@
 
     <dependencies>
         <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-gateway</artifactId>
-        </dependency>
-
-        <dependency>
             <groupId>com.miaosha.miaoshaproduct</groupId>
             <artifactId>miaosha-framework</artifactId>
             <version>0.0.1-SNAPSHOT</version>
