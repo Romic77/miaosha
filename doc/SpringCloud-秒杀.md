@@ -550,3 +550,14 @@ springcloud nacos/feign/sentinel/getway/admin
 订单超时处理: 
 
 ​	https://mp.weixin.qq.com/s/5GVuU8NQJJ3tNq4Loa3xlg
+
+
+
+
+
+
+
+## 测试点
+
+1. 超卖的问题
+2. 分布式事务的问题

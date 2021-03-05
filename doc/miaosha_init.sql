@@ -12,6 +12,20 @@ CREATE TABLE `t_user` (
                           `user_regtime` datetime DEFAULT NULL COMMENT '注册时间',
                           PRIMARY KEY (`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+drop table `undo_log`;
+CREATE TABLE `undo_log` (
+                            `id` bigint(20) NOT NULL AUTO_INCREMENT,
+                            `branch_id` bigint(20) NOT NULL,
+                            `xid` varchar(100) NOT NULL,
+                            `context` varchar(128) NOT NULL,
+                            `rollback_info` longblob NOT NULL,
+                            `log_status` int(11) NOT NULL,
+                            `log_created` datetime NOT NULL,
+                            `log_modified` datetime NOT NULL,
+                            `ext` varchar(100) DEFAULT NULL,
+                            PRIMARY KEY (`id`),
+                            UNIQUE KEY `ux_undo_log` (`xid`,`branch_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 INSERT INTO `t_user`(`user_id`, `username`, `login_password`, `balance`,`status`, `user_regtime`) VALUES (1, 'zhangsan', '123456',666666.66, 1, '2021-02-28 22:24:01');
 
@@ -26,6 +40,20 @@ CREATE TABLE `t_product` (
                              `update_time` datetime DEFAULT NULL COMMENT '修改时间',
                              PRIMARY KEY (`product_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=78 DEFAULT CHARSET=utf8 COMMENT='商品';
+drop table `undo_log`;
+CREATE TABLE `undo_log` (
+                            `id` bigint(20) NOT NULL AUTO_INCREMENT,
+                            `branch_id` bigint(20) NOT NULL,
+                            `xid` varchar(100) NOT NULL,
+                            `context` varchar(128) NOT NULL,
+                            `rollback_info` longblob NOT NULL,
+                            `log_status` int(11) NOT NULL,
+                            `log_created` datetime NOT NULL,
+                            `log_modified` datetime NOT NULL,
+                            `ext` varchar(100) DEFAULT NULL,
+                            PRIMARY KEY (`id`),
+                            UNIQUE KEY `ux_undo_log` (`xid`,`branch_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 INSERT INTO `t_product`(`product_id`, `product_name`, `product_price`, `content`,`total_stocks`, `create_time`) VALUES (2001, '电脑', 5000.00,'支持LOL',1000, '2021-02-28 22:24:01');
 
@@ -52,3 +80,17 @@ CREATE TABLE `t_order` (
                            `close_type` tinyint(2) DEFAULT NULL COMMENT '订单关闭原因 1-超时未支付 2-退款关闭 4-买家取消 15-已通过货到付款交易',
                            PRIMARY KEY (`order_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COMMENT='订单表';
+drop table `undo_log`;
+CREATE TABLE `undo_log` (
+                            `id` bigint(20) NOT NULL AUTO_INCREMENT,
+                            `branch_id` bigint(20) NOT NULL,
+                            `xid` varchar(100) NOT NULL,
+                            `context` varchar(128) NOT NULL,
+                            `rollback_info` longblob NOT NULL,
+                            `log_status` int(11) NOT NULL,
+                            `log_created` datetime NOT NULL,
+                            `log_modified` datetime NOT NULL,
+                            `ext` varchar(100) DEFAULT NULL,
+                            PRIMARY KEY (`id`),
+                            UNIQUE KEY `ux_undo_log` (`xid`,`branch_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;

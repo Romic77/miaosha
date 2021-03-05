@@ -33,14 +33,16 @@ public class OrderServiceImpl implements IOrderService {
 
 
     /**
-     * 用户下订单
+     * 1. 用户下订单
+     * 2. 发送消息给库存
+     * 3. 通过mq保证分布式事务的一致性
      *
      * @return boolean
      * @author chenqi
      * @date 2021/3/3 13:15
      */
     @Override
-    @GlobalTransactional(rollbackFor = Exception.class)
+    //@GlobalTransactional(rollbackFor = Exception.class)
     public CommonResult placeOrder(OrderDTO orderDTO) {
         Order order = new Order();
         Long orderId = Long.valueOf(leafFeignService.getSegmentId("leaf-segment-order"));
