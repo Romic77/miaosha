@@ -355,7 +355,7 @@ CREATE TABLE `undo_log` (
 > seata-1.4\bin目录下：双击 seata-server.bat
 > nacos中查看服务是否注册成功
 
-![在这里插入图片描述](../images/20201214144224439.png)
+![在这里插入图片描述](images/20201214144224439.png)
 
 ### seata-1.4.0.配置
 
@@ -456,6 +456,15 @@ metrics.exporterPrometheusPort=9898
 service.vgroupMapping.sub-tx-group=default
 service.vgroupMapping.miaosha-tx-group=default
 
+### 启动nacos-config.sh,将配置注入到nacos中
+
+在seata-server-1.4.0\script\config-center\nacos目录下，右键 Git Bash Here
+
+![在这里插入图片描述](images/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl8zNzY5ODMzNg==,size_16,color_FFFFFF,t_70.png)
+
+输入命令：
+sh nacos-config.sh -h 127.0.0.1 -p 8848 -g SEATA_GROUP -u nacos -w nacos
+
 ## SpringCloud 配置
 
 ### pom.xml
@@ -532,3 +541,12 @@ springcloud nacos/feign/sentinel/getway/admin
 | xxl-job-admin      | 8084 |
 | seata-server       | 8091 |
 
+
+
+
+
+
+
+订单超时处理: 
+
+​	https://mp.weixin.qq.com/s/5GVuU8NQJJ3tNq4Loa3xlg
