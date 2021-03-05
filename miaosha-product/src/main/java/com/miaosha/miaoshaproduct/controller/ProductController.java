@@ -9,9 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -47,12 +45,31 @@ public class ProductController {
     }
 
     @RequestMapping("/product/findProductById")
-    public CommonResult<ProductDTO> insertProduct(@RequestParam("productId") Long productId) throws Exception {
+    public CommonResult<ProductDTO> findProductById(@RequestParam("productId") Long productId) throws Exception {
         try {
             Product product = productService.findProductById(productId);
             ProductDTO productDTO = new ProductDTO();
             BeanUtils.copyProperties(product, productDTO);
             return CommonResult.success(productDTO);
+        } catch (Exception e) {
+            logger.error("Invoking productService cause ercror:{}", e);
+
+            return CommonResult.failed("product服务异常");
+        }
+    }
+
+    /**
+     * 更新产品库存
+     *
+     * @return com.miaosha.miaoshaproduct.utils.CommonResult<com.miaosha.miaoshaproduct.domain.dto.ProductDTO>
+     * @author chenqi
+     * @date 2021/3/5 10:42
+     */
+    @RequestMapping(value = "/product/updateByPrimaryKeySelective", method = RequestMethod.POST)
+    public CommonResult<ProductDTO> updateByPrimaryKeySelective(@RequestBody ProductDTO productDTO) throws Exception {
+        try {
+            productService.updateByPrimaryKeySelective(productDTO);
+            return CommonResult.success(null);
         } catch (Exception e) {
             logger.error("Invoking productService cause ercror:{}", e);
 

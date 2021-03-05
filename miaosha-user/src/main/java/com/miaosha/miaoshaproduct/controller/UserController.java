@@ -75,4 +75,20 @@ public class UserController {
         }
     }
 
+    /**
+     * 用户支付订单
+     * @param productId
+     * @return com.miaosha.miaoshaproduct.utils.CommonResult
+     * @author chenqi
+     * @date 2021/3/5 10:47
+     */
+    @RequestMapping(value = "/user/payOrder", method = RequestMethod.POST, produces = "application/json; charset=utf-8")
+    public CommonResult payOrder(String productId) {
+        //1. 校验订单状态
+        //2. 判断用户余额是否足够
+        //3. 修改订单状态
+        return CommonResult.success(null);
+
+    }
+
 }
