@@ -12,7 +12,8 @@ CREATE TABLE `t_user` (
                           `user_regtime` datetime DEFAULT NULL COMMENT '注册时间',
                           PRIMARY KEY (`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
-drop table `undo_log`;
+
+drop table IF EXISTS `undo_log`;
 CREATE TABLE `undo_log` (
                             `id` bigint(20) NOT NULL AUTO_INCREMENT,
                             `branch_id` bigint(20) NOT NULL,
@@ -40,7 +41,8 @@ CREATE TABLE `t_product` (
                              `update_time` datetime DEFAULT NULL COMMENT '修改时间',
                              PRIMARY KEY (`product_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=78 DEFAULT CHARSET=utf8 COMMENT='商品';
-drop table `undo_log`;
+
+drop table IF EXISTS `undo_log`;
 CREATE TABLE `undo_log` (
                             `id` bigint(20) NOT NULL AUTO_INCREMENT,
                             `branch_id` bigint(20) NOT NULL,
@@ -80,7 +82,8 @@ CREATE TABLE `t_order` (
                            `close_type` tinyint(2) DEFAULT NULL COMMENT '订单关闭原因 1-超时未支付 2-退款关闭 4-买家取消 15-已通过货到付款交易',
                            PRIMARY KEY (`order_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COMMENT='订单表';
-drop table `undo_log`;
+
+drop table IF EXISTS `undo_log`;
 CREATE TABLE `undo_log` (
                             `id` bigint(20) NOT NULL AUTO_INCREMENT,
                             `branch_id` bigint(20) NOT NULL,

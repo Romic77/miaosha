@@ -2,9 +2,13 @@ package com.miaosha.miaoshaproduct.controller;
 
 
 import com.miaosha.miaoshaproduct.domain.dto.OrderDTO;
+import com.miaosha.miaoshaproduct.domain.dto.ProductDTO;
 import com.miaosha.miaoshaproduct.service.IOrderService;
+import com.miaosha.miaoshaproduct.service.ProductFeignService;
 import com.miaosha.miaoshaproduct.utils.CommonResult;
 import org.redisson.api.RAtomicLong;
+import org.redisson.api.RList;
+import org.redisson.api.RLock;
 import org.redisson.api.RedissonClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,28 +31,34 @@ public class OrderController {
     @Autowired
     private IOrderService orderService;
 
+    @Autowired
+    private ProductFeignService productFeignService;
+
     @RequestMapping(value = "/order/placeOrder", method = RequestMethod.POST,
             produces = "application/json; charset=UTF-8", consumes = "application/json;charset=UTF-8")
     public CommonResult placeOrder(@RequestBody OrderDTO orderDTO) {
+        RLock redissonLock = redissonClient.getLock("lock");
         try {
-
-            String productId = orderDTO.getProductId() + "";
-            RAtomicLong atomicVar = redissonClient.getAtomicLong(productId);
-            // 多线程调用 线程安全
-            long stock = atomicVar.get();
-
-            if (stock < 0) {
-                return CommonResult.failed("库存不足,秒杀结束");
+            redissonLock.lock();
+            CommonResult<ProductDTO> productDTOCommonResult = productFeignService.findProductById(orderDTO.getProductId());
+            if (productDTOCommonResult.getCode() != 200) {
+                return productDTOCommonResult;
             }
-            orderService.placeOrder(orderDTO);
 
-            //调用消息中间件rocketMQ进行库存扣减
-
+            ProductDTO productDTO = productDTOCommonResult.getData();
+            if (productDTO.getTotalStocks() > 0) {
+                logger.info("下单成功，当前库存为:{}", productDTO.getTotalStocks());
+                orderService.placeOrder(orderDTO, productDTO);
+            } else {
+                return CommonResult.failed("下单失败，库存不足");
+            }
 
             return CommonResult.success(null);
         } catch (Exception e) {
             logger.error("订单服务异常: ", e);
             return CommonResult.failed("placeOrder业务异常");
+        } finally {
+            redissonLock.unlock();
         }
     }
 }

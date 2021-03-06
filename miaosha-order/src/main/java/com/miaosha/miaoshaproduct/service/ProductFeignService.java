@@ -7,6 +7,7 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 /**
  * @Author: chenq
@@ -18,5 +19,8 @@ public interface ProductFeignService {
 
     @RequestMapping(value = "/product/updateByPrimaryKeySelective",method = RequestMethod.POST)
     public CommonResult<ProductDTO> updateByPrimaryKeySelective(@RequestBody ProductDTO productDTO);
+
+    @RequestMapping("/product/findProductById")
+    public CommonResult<ProductDTO> findProductById(@RequestParam("productId") Long productId);
 
 }

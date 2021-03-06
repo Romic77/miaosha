@@ -5,6 +5,7 @@ import com.miaosha.miaoshaproduct.domain.dto.ProductDTO;
 import com.miaosha.miaoshaproduct.domain.entity.Product;
 import com.miaosha.miaoshaproduct.service.IProductService;
 import com.miaosha.miaoshaproduct.service.LeafFeignService;
+import com.miaosha.miaoshaproduct.utils.CommonResult;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,6 +21,7 @@ public class ProductServiceImpl implements IProductService {
     @Autowired
     private ProductMapper productMapper;
 
+    @Override
     public String insertProduct(ProductDTO product) throws Exception {
         String id=leafFeignService.getSegmentId("leaf-segment-product");
         if(StringUtils.isBlank(id)){
@@ -33,5 +35,11 @@ public class ProductServiceImpl implements IProductService {
     @Override
     public Product findProductById(Long productId) {
         return productMapper.selectByPrimaryKey(productId);
+    }
+
+    @Override
+    public CommonResult<ProductDTO> updateByPrimaryKeySelective(ProductDTO productDTO) {
+        productMapper.updateByPrimaryKeySelective(productDTO);
+        return CommonResult.success(null);
     }
 }

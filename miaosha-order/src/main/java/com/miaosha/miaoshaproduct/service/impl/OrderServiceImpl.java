@@ -10,6 +10,7 @@ import com.miaosha.miaoshaproduct.service.ProductFeignService;
 import com.miaosha.miaoshaproduct.utils.CommonResult;
 import com.xkzhangsan.time.converter.DateTimeConverterUtil;
 import io.seata.spring.annotation.GlobalTransactional;
+import org.redisson.api.RedissonClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +37,9 @@ public class OrderServiceImpl implements IOrderService {
     @Autowired
     private ProductFeignService productFeignService;
 
+    @Autowired
+    private RedissonClient redissonClient;
+
     /**
      * 1. 用户下订单
      * 2. 基于seata AT 分布式事务
@@ -46,7 +50,7 @@ public class OrderServiceImpl implements IOrderService {
      */
     @Override
     @GlobalTransactional(rollbackFor = Exception.class)
-    public CommonResult placeOrder(OrderDTO orderDTO) {
+    public CommonResult placeOrder(OrderDTO orderDTO, ProductDTO productDTO) {
         Order order = new Order();
         Long orderId = Long.valueOf(leafFeignService.getSegmentId("leaf-segment-order"));
         if (orderId == null) {
@@ -66,10 +70,10 @@ public class OrderServiceImpl implements IOrderService {
         orderMapper.insertSelective(order);
 
         //扣减库存
-        ProductDTO productDTO=new ProductDTO();
-        productDTO.setProductId(orderDTO.getProductId());
-        productDTO.setTotalStocks(orderDTO.getProductNums());
-        productFeignService.updateByPrimaryKeySelective(productDTO);
+        ProductDTO updateProductDTO = new ProductDTO();
+        updateProductDTO.setProductId(orderDTO.getProductId());
+        updateProductDTO.setTotalStocks(productDTO.getTotalStocks() - 1);
+        productFeignService.updateByPrimaryKeySelective(updateProductDTO);
         return CommonResult.success(null);
     }
 }
