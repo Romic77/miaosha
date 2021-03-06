@@ -534,6 +534,10 @@ service上添加：
 
 springcloud nacos/feign/sentinel/getway/admin
 
+
+
+## 端口问题
+
 | 应用               | 端口 |
 | ------------------ | ---- |
 | leaf-server        | 8081 |
@@ -553,7 +557,21 @@ springcloud nacos/feign/sentinel/getway/admin
 
 
 
+## sentinel
 
+https://blog.csdn.net/a____a23456/article/details/107319244
+
+[
+    {
+        "resource": "/hello",
+        "limitApp": "default",
+        "grade": 1,
+        "count": 5,
+        "strategy": 0,
+        "controlBehavior": 0,
+        "clusterMode": false
+    }
+]
 
 
 
@@ -561,3 +579,4 @@ springcloud nacos/feign/sentinel/getway/admin
 
 1. 超卖的问题
 2. 分布式事务的问题
+

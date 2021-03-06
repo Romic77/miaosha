@@ -1,6 +1,7 @@
 package com.miaosha.miaoshaproduct.controller;
 
 
+import com.alibaba.csp.sentinel.annotation.SentinelResource;
 import com.miaosha.miaoshaproduct.domain.dto.OrderDTO;
 import com.miaosha.miaoshaproduct.domain.dto.ProductDTO;
 import com.miaosha.miaoshaproduct.service.IOrderService;
