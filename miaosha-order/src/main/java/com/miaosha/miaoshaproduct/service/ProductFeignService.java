@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 @FeignClient(value = "miaosha-product")
 public interface ProductFeignService {
 
-    @RequestMapping(value = "/product/updateByPrimaryKeySelective",method = RequestMethod.POST)
+    @RequestMapping(value = "/product/updateByPrimaryKeySelective", method = RequestMethod.POST)
     public CommonResult<ProductDTO> updateByPrimaryKeySelective(@RequestBody ProductDTO productDTO);
 
     @RequestMapping("/product/findProductById")
