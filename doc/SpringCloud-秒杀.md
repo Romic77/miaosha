@@ -575,6 +575,24 @@ https://blog.csdn.net/a____a23456/article/details/107319244
 
 
 
+## rocketmq
+
+\2. 配置
+2.1 系统环境变量配置
+变量名：ROCKETMQ_HOME
+变量值：MQ解压路径\MQ文件夹名
+eg、ROCKETMQ_HOME=D:\dev\rocketmq-all-4.3.0-bin-release
+
+\3. 启动
+3.1 启动NAMESERVER
+Cmd命令框执行进入至‘MQ文件夹\bin’下，然后执行‘**start mqnamesrv.cmd**’，启动NAMESERVER。成功后会弹出提示框，此框勿关闭。
+![img](images/270324-20180829130326398-483250352.png)
+
+3.2 启动BROKER
+Cmd命令框执行进入至‘MQ文件夹\bin’下，然后执行‘**start mqbroker.cmd -n 127.0.0.1:9876 autoCreateTopicEnable=true**’，启动BROKER。成功后会弹出提示框，此框勿关闭。
+
+
+
 ## 测试点
 
 1. 超卖的问题
