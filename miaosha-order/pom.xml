@@ -39,11 +39,6 @@
     </dependency>
 
 
-    <dependency>
-      <groupId>com.miaosha.miaoshaproduct</groupId>
-      <artifactId>miaosha-parent</artifactId>
-      <version>0.0.1-SNAPSHOT</version>
-    </dependency>
 
   </dependencies>
 

@@ -19,6 +19,14 @@ spring:
       discovery:
         enabled: true
         server-addr: localhost:8848
+    stream:
+      rocketmq:
+        binder:
+          # RocketMQ 服务器地址
+          name-server: 127.0.0.1:9876
+      bindings:
+        output1: { destination: test-topic1, content-type: application/json }
+        output2: { destination: test-topic2, content-type: application/json }
   datasource:
     druid:
       driver-class-name: com.mysql.cj.jdbc.Driver
@@ -51,7 +59,7 @@ spring:
     password: 123456
     port: 6379
 seata:
-  enabled: true
+  enabled: false
   application-id: ${spring.application.name}
   tx-service-group: miaosha-tx-group
   enable-auto-data-source-proxy: true
