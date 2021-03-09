@@ -60,7 +60,7 @@ public class OrderController {
                 JSONObject jsonObject=new JSONObject();
                 jsonObject.put("orderDTO",orderDTO);
                 jsonObject.put("productDTO",productDTO);
-                senderService.sendMessageInTransaction(jsonObject);
+                senderService.sendMessageInTransaction("producer_placeOrder_topic",jsonObject);
             } else {
                 return CommonResult.failed("下单失败，库存不足");
             }
