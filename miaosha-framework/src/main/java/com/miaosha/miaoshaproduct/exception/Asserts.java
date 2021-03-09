@@ -1,4 +1,4 @@
-package com.miaosha.miaoshaproduct.exption;
+package com.miaosha.miaoshaproduct.exception;
 
 import com.miaosha.miaoshaproduct.utils.IErrorCode;
 
