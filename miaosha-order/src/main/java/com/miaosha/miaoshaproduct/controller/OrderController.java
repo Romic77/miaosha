@@ -1,8 +1,10 @@
 package com.miaosha.miaoshaproduct.controller;
 
 
+import com.alibaba.fastjson.JSONObject;
 import com.miaosha.miaoshaproduct.domain.dto.OrderDTO;
 import com.miaosha.miaoshaproduct.domain.dto.ProductDTO;
+import com.miaosha.miaoshaproduct.rocketmq.SenderService;
 import com.miaosha.miaoshaproduct.service.IOrderService;
 import com.miaosha.miaoshaproduct.service.ProductFeignService;
 import com.miaosha.miaoshaproduct.utils.CommonResult;
@@ -37,6 +39,9 @@ public class OrderController {
     @Autowired
     private ProductFeignService productFeignService;
 
+    @Autowired
+    private SenderService senderService;
+
     @RequestMapping(value = "/order/placeOrder", method = RequestMethod.POST,
             produces = "application/json; charset=UTF-8", consumes = "application/json;charset=UTF-8")
     public CommonResult placeOrder(@RequestBody OrderDTO orderDTO) {
@@ -52,6 +57,10 @@ public class OrderController {
             if (productDTO.getTotalStocks() > 0) {
                 logger.info("下单成功，当前库存为:{}", productDTO.getTotalStocks());
                 orderService.placeOrder(orderDTO, productDTO);
+                JSONObject jsonObject=new JSONObject();
+                jsonObject.put("orderDTO",orderDTO);
+                jsonObject.put("productDTO",productDTO);
+                senderService.sendMessageInTransaction(jsonObject);
             } else {
                 return CommonResult.failed("下单失败，库存不足");
             }

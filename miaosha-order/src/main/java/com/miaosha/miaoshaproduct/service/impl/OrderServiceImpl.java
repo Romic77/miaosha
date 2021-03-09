@@ -75,11 +75,10 @@ public class OrderServiceImpl implements IOrderService {
 
 
         //扣减库存
-        ProductDTO updateProductDTO = new ProductDTO();
+        /*ProductDTO updateProductDTO = new ProductDTO();
         updateProductDTO.setProductId(orderDTO.getProductId());
         updateProductDTO.setTotalStocks(productDTO.getTotalStocks() - 1);
-        //senderService.sendObject();
-        //productFeignService.updateByPrimaryKeySelective(updateProductDTO);
+        productFeignService.updateByPrimaryKeySelective(updateProductDTO);*/
         return CommonResult.success(null);
     }
 }

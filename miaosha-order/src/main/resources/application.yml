@@ -19,14 +19,9 @@ spring:
       discovery:
         enabled: true
         server-addr: localhost:8848
-    stream:
-      rocketmq:
-        binder:
-          # RocketMQ 服务器地址
-          name-server: 127.0.0.1:9876
-      bindings:
-        output1: { destination: test-topic1, content-type: application/json }
-        output2: { destination: placeOrder-topic, content-type: application/json }
+#      bindings:
+#        output1: { destination: test-topic1, content-type: application/json }
+#        output2: { destination: placeOrder-topic, content-type: application/json }
   datasource:
     druid:
       driver-class-name: com.mysql.cj.jdbc.Driver
@@ -79,3 +74,7 @@ seata:
       namespace:
       userName: "nacos"
       password: "nacos"
+rocketmq:
+  name-server: 127.0.0.1:9876
+  producer:
+    group: producer_miaosha_order
