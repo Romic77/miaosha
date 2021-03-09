@@ -1,5 +1,6 @@
 package com.miaosha.miaoshaproduct.controller;
 
+import com.miaosha.miaoshaproduct.domain.dto.ProductDTO;
 import com.miaosha.miaoshaproduct.rocketmq.SenderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,9 +26,10 @@ public class TestController {
     }
 
     @RequestMapping(value = "/sendObject", method = RequestMethod.GET)
-    public String sendObject(int index) {
-
-        senderService.sendObject("123", "tagObj");
+    public String sendObject() {
+        ProductDTO productDTO=new ProductDTO();
+        productDTO.setProductId(123l);
+        senderService.sendObject(productDTO, "tagObj");
         return "Object对象消息发送成功!";
     }
 }

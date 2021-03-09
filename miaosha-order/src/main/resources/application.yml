@@ -26,7 +26,7 @@ spring:
           name-server: 127.0.0.1:9876
       bindings:
         output1: { destination: test-topic1, content-type: application/json }
-        output2: { destination: test-topic2, content-type: application/json }
+        output2: { destination: placeOrder-topic, content-type: application/json }
   datasource:
     druid:
       driver-class-name: com.mysql.cj.jdbc.Driver

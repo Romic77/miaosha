@@ -4,6 +4,7 @@ import com.miaosha.miaoshaproduct.domain.dao.OrderMapper;
 import com.miaosha.miaoshaproduct.domain.dto.OrderDTO;
 import com.miaosha.miaoshaproduct.domain.dto.ProductDTO;
 import com.miaosha.miaoshaproduct.domain.entity.Order;
+import com.miaosha.miaoshaproduct.rocketmq.SenderService;
 import com.miaosha.miaoshaproduct.service.IOrderService;
 import com.miaosha.miaoshaproduct.service.LeafFeignService;
 import com.miaosha.miaoshaproduct.service.ProductFeignService;
@@ -40,6 +41,9 @@ public class OrderServiceImpl implements IOrderService {
     @Autowired
     private RedissonClient redissonClient;
 
+    @Autowired
+    private SenderService senderService;
+
     /**
      * 1. 用户下订单
      * 2. 基于seata AT 分布式事务
@@ -69,11 +73,13 @@ public class OrderServiceImpl implements IOrderService {
         order.setRefundSts(1);
         orderMapper.insertSelective(order);
 
+
         //扣减库存
         ProductDTO updateProductDTO = new ProductDTO();
         updateProductDTO.setProductId(orderDTO.getProductId());
         updateProductDTO.setTotalStocks(productDTO.getTotalStocks() - 1);
-        productFeignService.updateByPrimaryKeySelective(updateProductDTO);
+        //senderService.sendObject();
+        //productFeignService.updateByPrimaryKeySelective(updateProductDTO);
         return CommonResult.success(null);
     }
 }

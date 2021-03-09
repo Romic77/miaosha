@@ -1,14 +1,11 @@
 package com.miaosha.miaoshaproduct.controller;
 
 
-import com.alibaba.csp.sentinel.annotation.SentinelResource;
 import com.miaosha.miaoshaproduct.domain.dto.OrderDTO;
 import com.miaosha.miaoshaproduct.domain.dto.ProductDTO;
 import com.miaosha.miaoshaproduct.service.IOrderService;
 import com.miaosha.miaoshaproduct.service.ProductFeignService;
 import com.miaosha.miaoshaproduct.utils.CommonResult;
-import org.redisson.api.RAtomicLong;
-import org.redisson.api.RList;
 import org.redisson.api.RLock;
 import org.redisson.api.RedissonClient;
 import org.slf4j.Logger;
@@ -19,6 +16,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ *
+ * @author chenqi
+ * @date 2021/3/9 09:30
+ */
 @RestController
 public class OrderController {
     /**
