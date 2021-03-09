@@ -73,12 +73,8 @@ public class OrderServiceImpl implements IOrderService {
         order.setRefundSts(1);
         orderMapper.insertSelective(order);
 
+        //幂等处理
 
-        //扣减库存
-        /*ProductDTO updateProductDTO = new ProductDTO();
-        updateProductDTO.setProductId(orderDTO.getProductId());
-        updateProductDTO.setTotalStocks(productDTO.getTotalStocks() - 1);
-        productFeignService.updateByPrimaryKeySelective(updateProductDTO);*/
         return CommonResult.success(null);
     }
 }

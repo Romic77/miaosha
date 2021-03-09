@@ -27,7 +27,6 @@ CREATE TABLE `undo_log` (
                             PRIMARY KEY (`id`),
                             UNIQUE KEY `ux_undo_log` (`xid`,`branch_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
-
 INSERT INTO `t_user`(`user_id`, `username`, `login_password`, `balance`,`status`, `user_regtime`) VALUES (1, 'zhangsan', '123456',666666.66, 1, '2021-02-28 22:24:01');
 
 USE `miaosha_product`;
@@ -41,6 +40,14 @@ CREATE TABLE `t_product` (
                              `update_time` datetime DEFAULT NULL COMMENT '修改时间',
                              PRIMARY KEY (`product_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=78 DEFAULT CHARSET=utf8 COMMENT='商品';
+
+DROP TABLE IF EXISTS `de_duplication`;
+CREATE TABLE `de_duplication`  (
+                                   `tx_no`  varchar(64)  NOT NULL ,
+                                   `create_time` datetime(0) NULL DEFAULT NULL,
+                                   PRIMARY KEY (`tx_no`)
+) ENGINE = InnoDB AUTO_INCREMENT=78 DEFAULT CHARSET=utf8 COMMENT='交易去重表';
+
 
 drop table IF EXISTS `undo_log`;
 CREATE TABLE `undo_log` (
