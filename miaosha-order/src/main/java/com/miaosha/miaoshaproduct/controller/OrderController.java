@@ -6,6 +6,7 @@ import com.miaosha.miaoshaproduct.domain.dto.OrderDTO;
 import com.miaosha.miaoshaproduct.domain.dto.ProductDTO;
 import com.miaosha.miaoshaproduct.rocketmq.SenderService;
 import com.miaosha.miaoshaproduct.service.IOrderService;
+import com.miaosha.miaoshaproduct.service.LeafFeignService;
 import com.miaosha.miaoshaproduct.service.ProductFeignService;
 import com.miaosha.miaoshaproduct.utils.CommonResult;
 import org.redisson.api.RLock;
@@ -19,7 +20,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- *
  * @author chenqi
  * @date 2021/3/9 09:30
  */
@@ -42,6 +42,9 @@ public class OrderController {
     @Autowired
     private SenderService senderService;
 
+    @Autowired
+    private LeafFeignService leafFeignService;
+
     @RequestMapping(value = "/order/placeOrder", method = RequestMethod.POST,
             produces = "application/json; charset=UTF-8", consumes = "application/json;charset=UTF-8")
     public CommonResult placeOrder(@RequestBody OrderDTO orderDTO) {
@@ -55,12 +58,17 @@ public class OrderController {
 
             ProductDTO productDTO = productDTOCommonResult.getData();
             if (productDTO.getTotalStocks() > 0) {
-                logger.info("下单成功，当前库存为:{}", productDTO.getTotalStocks());
-                orderService.placeOrder(orderDTO, productDTO);
-                JSONObject jsonObject=new JSONObject();
-                jsonObject.put("orderDTO",orderDTO);
-                jsonObject.put("productDTO",productDTO);
-                senderService.sendMessageInTransaction("miaosha_placeorder_topic",jsonObject);
+                Long orderId = Long.valueOf(leafFeignService.getSegmentId("leaf-segment-order"));
+                if (orderId == null) {
+                    logger.error("get leaf-segment-order failed,orderId:{}", orderId);
+                    return CommonResult.failed("get leaf-segment-order failed");
+                }
+                orderDTO.setOrderId(orderId);
+
+                JSONObject jsonObject = new JSONObject();
+                jsonObject.put("orderDTO", orderDTO);
+                jsonObject.put("productDTO", productDTO);
+                senderService.sendMessageInTransaction("miaosha_placeorder_topic", jsonObject);
             } else {
                 return CommonResult.failed("下单失败，库存不足");
             }

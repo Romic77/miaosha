@@ -48,6 +48,9 @@ public class ProductController {
     public CommonResult<ProductDTO> findProductById(@RequestParam("productId") Long productId) {
         try {
             Product product = productService.findProductById(productId);
+            /*if (product == null) {
+                return CommonResult.failed("当前产品不存在:" + productId);
+            }*/
             ProductDTO productDTO = new ProductDTO();
             BeanUtils.copyProperties(product, productDTO);
             return CommonResult.success(productDTO);
@@ -68,7 +71,7 @@ public class ProductController {
     @RequestMapping(value = "/product/updateByPrimaryKeySelective", method = RequestMethod.POST)
     public CommonResult<ProductDTO> updateByPrimaryKeySelective(@RequestBody ProductDTO productDTO) throws Exception {
         try {
-            Product product=new Product();
+            Product product = new Product();
             BeanUtils.copyProperties(productDTO, product);
             productService.updateByPrimaryKeySelective(product);
             return CommonResult.success(null);

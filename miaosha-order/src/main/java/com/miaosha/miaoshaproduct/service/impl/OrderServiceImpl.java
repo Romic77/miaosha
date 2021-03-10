@@ -48,6 +48,7 @@ public class OrderServiceImpl implements IOrderService {
 
     @Autowired
     private DuplicationMapper duplicationMapper;
+
     /**
      * 1. 用户下订单
      * 2. 基于seata AT 分布式事务
@@ -60,11 +61,7 @@ public class OrderServiceImpl implements IOrderService {
     //@GlobalTransactional(rollbackFor = Exception.class)
     public CommonResult placeOrder(OrderDTO orderDTO, ProductDTO productDTO) {
         Order order = new Order();
-        Long orderId = Long.valueOf(leafFeignService.getSegmentId("leaf-segment-order"));
-        if (orderId == null) {
-            logger.error("get leaf-segment-order failed,orderId:{}", orderId);
-            return CommonResult.failed("get leaf-segment-order failed");
-        }
+        Long orderId = orderDTO.getOrderId();
         order.setUserId(orderDTO.getUserId());
         order.setOrderId(orderId);
         order.setProductId(orderDTO.getProductId());
@@ -76,8 +73,6 @@ public class OrderServiceImpl implements IOrderService {
         order.setIsPayed(true);
         order.setRefundSts(1);
         orderMapper.insertSelective(order);
-        orderDTO.setOrderId(orderId);
-
 
         Long duplicationId = Long.valueOf(leafFeignService.getSegmentId("leaf-segment-duplication"));
         if (duplicationId == null) {
@@ -85,7 +80,7 @@ public class OrderServiceImpl implements IOrderService {
             return CommonResult.failed("get leaf-segment-duplication failed");
         }
         //幂等处理
-        Duplication duplication=new Duplication();
+        Duplication duplication = new Duplication();
         duplication.setDuplicationId(duplicationId);
         duplication.setCreateTime(DateTimeConverterUtil.toDate(LocalDateTime.now()));
         duplication.setServiceName("miaosha-order");
