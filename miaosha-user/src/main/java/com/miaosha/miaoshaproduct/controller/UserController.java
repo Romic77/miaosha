@@ -43,6 +43,7 @@ public class UserController {
      * 用户下订单
      * 1. 配置了限流,并持久化到nacos上
      * 2. 降级需要单独使用@SentinelResource,保证 参数一致 返回值一致
+     *
      * @return java.lang.String
      * @author chenqi
      * @date 2021/3/1 15:13
@@ -58,16 +59,11 @@ public class UserController {
 
             CommonResult<OrderDTO> commonResult = userService.userPlaceOrder(productDTO);
 
-            // 多线程处理-用户下单
-            //listeningExecutorService.submit();
-        /*final ListenableFuture<CommonResult> listenableFuture = (ListenableFuture<CommonResult>) listeningExecutorService.submit(() -> {
-            orderFeignService.placeOrder(commonResult.getData());
-        });
-        listenableFuture.get();*/
 
-            listeningExecutorService.submit(() -> {
-                orderFeignService.placeOrder(commonResult.getData());
-            });
+            CommonResult result = orderFeignService.placeOrder(commonResult.getData());
+            if (result.getCode() != 200) {
+                return result;
+            }
             return CommonResult.success(null);
         } catch (Exception e) {
             logger.error("用户服务异常;", e);
@@ -77,6 +73,7 @@ public class UserController {
 
     /**
      * 用户支付订单
+     *
      * @param productId
      * @return com.miaosha.miaoshaproduct.utils.CommonResult
      * @author chenqi

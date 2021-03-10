@@ -45,7 +45,7 @@ public class ProductController {
     }
 
     @RequestMapping("/product/findProductById")
-    public CommonResult<ProductDTO> findProductById(@RequestParam("productId") Long productId) throws Exception {
+    public CommonResult<ProductDTO> findProductById(@RequestParam("productId") Long productId) {
         try {
             Product product = productService.findProductById(productId);
             ProductDTO productDTO = new ProductDTO();
