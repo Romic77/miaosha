@@ -45,6 +45,8 @@ DROP TABLE IF EXISTS `t_duplication`;
 CREATE TABLE `t_duplication`  (
                                   `duplication_Id`  bigint(20)  NOT NULL ,
                                   `create_time` datetime(0) NULL DEFAULT NULL,
+                                  `service_name` varchar(255) NOT NULL ,
+                                  `service_id` bigint(20)  NOT NULL ,
                                   PRIMARY KEY (`duplication_Id`)
 ) ENGINE = InnoDB AUTO_INCREMENT=78 DEFAULT CHARSET=utf8 COMMENT='交易去重表';
 
@@ -109,5 +111,7 @@ DROP TABLE IF EXISTS `t_duplication`;
 CREATE TABLE `t_duplication`  (
                                   `duplication_Id`  bigint(20)  NOT NULL ,
                                   `create_time` datetime(0) NULL DEFAULT NULL,
+                                  `service_name` varchar(255) NOT NULL ,
+                                  `service_id` bigint(20)  NOT NULL ,
                                   PRIMARY KEY (`duplication_Id`)
 ) ENGINE = InnoDB AUTO_INCREMENT=78 DEFAULT CHARSET=utf8 COMMENT='交易去重表';

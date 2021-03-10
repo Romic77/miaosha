@@ -598,3 +598,5 @@ Cmd命令框执行进入至‘MQ文件夹\bin’下，然后执行‘**start mqb
 1. 超卖的问题
 2. 分布式事务的问题
 
+
+https://www.ctolib.com/amp/TaXueWWL-order-charge-notify.html
