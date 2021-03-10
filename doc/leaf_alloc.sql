@@ -13,3 +13,4 @@ CREATE TABLE `leaf_alloc` (
 
 insert into leaf_alloc(biz_tag, max_id, step, description) values('leaf-segment-order', 1, 2000, 'Test leaf Segment Mode Get Id');
 insert into leaf_alloc(biz_tag, max_id, step, description) values('leaf-segment-product', 1, 2000, 'Test leaf Segment Mode Get Id')
+insert into leaf_alloc(biz_tag, max_id, step, description) values('leaf-segment-duplication', 1, 2000, 'Test leaf Segment Mode Get Id')

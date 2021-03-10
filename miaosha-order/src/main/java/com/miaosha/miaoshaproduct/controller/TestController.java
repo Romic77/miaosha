@@ -38,13 +38,15 @@ public class TestController {
     @RequestMapping(value = "/sendMessageInTransaction", method = RequestMethod.GET)
     public String sendMessageInTransaction() {
         OrderDTO orderDTO=new OrderDTO();
+        orderDTO.setOrderId(1l);
         orderDTO.setUserId("1l");
         orderDTO.setProductId(2001l);
         orderDTO.setProductName("电脑");
+        orderDTO.setProductNums(1);
         JSONObject jsonObject=new JSONObject();
         jsonObject.put("orderDTO",orderDTO);
         jsonObject.put("productDTO",null);
-        senderService.sendMessageInTransaction("miaosha_order_placeorder",jsonObject);
+        senderService.sendMessageInTransaction("miaosha_placeorder_topic",jsonObject);
         return "Object对象消息发送成功!";
     }
 

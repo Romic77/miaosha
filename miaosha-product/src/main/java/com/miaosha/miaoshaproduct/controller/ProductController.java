@@ -35,7 +35,7 @@ public class ProductController {
     @RequestMapping("/insert/product")
     public String insertProduct() throws Exception {
 
-        ProductDTO product = new ProductDTO();
+        Product product = new Product();
         product.setProductName("台式电脑");
         product.setProductPrice(new BigDecimal("5888.00"));
         product.setContent("支持LOL");
@@ -68,7 +68,9 @@ public class ProductController {
     @RequestMapping(value = "/product/updateByPrimaryKeySelective", method = RequestMethod.POST)
     public CommonResult<ProductDTO> updateByPrimaryKeySelective(@RequestBody ProductDTO productDTO) throws Exception {
         try {
-            productService.updateByPrimaryKeySelective(productDTO);
+            Product product=new Product();
+            BeanUtils.copyProperties(productDTO, product);
+            productService.updateByPrimaryKeySelective(product);
             return CommonResult.success(null);
         } catch (Exception e) {
             logger.error("Invoking productService cause ercror:{}", e);

@@ -41,13 +41,12 @@ CREATE TABLE `t_product` (
                              PRIMARY KEY (`product_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=78 DEFAULT CHARSET=utf8 COMMENT='商品';
 
-DROP TABLE IF EXISTS `de_duplication`;
-CREATE TABLE `de_duplication`  (
-                                   `tx_no`  varchar(64)  NOT NULL ,
-                                   `create_time` datetime(0) NULL DEFAULT NULL,
-                                   PRIMARY KEY (`tx_no`)
+DROP TABLE IF EXISTS `t_duplication`;
+CREATE TABLE `t_duplication`  (
+                                  `duplication_Id`  bigint(20)  NOT NULL ,
+                                  `create_time` datetime(0) NULL DEFAULT NULL,
+                                  PRIMARY KEY (`duplication_Id`)
 ) ENGINE = InnoDB AUTO_INCREMENT=78 DEFAULT CHARSET=utf8 COMMENT='交易去重表';
-
 
 drop table IF EXISTS `undo_log`;
 CREATE TABLE `undo_log` (
@@ -104,3 +103,11 @@ CREATE TABLE `undo_log` (
                             PRIMARY KEY (`id`),
                             UNIQUE KEY `ux_undo_log` (`xid`,`branch_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
+
+DROP TABLE IF EXISTS `t_duplication`;
+CREATE TABLE `t_duplication`  (
+                                  `duplication_Id`  bigint(20)  NOT NULL ,
+                                  `create_time` datetime(0) NULL DEFAULT NULL,
+                                  PRIMARY KEY (`duplication_Id`)
+) ENGINE = InnoDB AUTO_INCREMENT=78 DEFAULT CHARSET=utf8 COMMENT='交易去重表';

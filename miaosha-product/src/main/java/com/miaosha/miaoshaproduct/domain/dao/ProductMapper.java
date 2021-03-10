@@ -1,6 +1,5 @@
 package com.miaosha.miaoshaproduct.domain.dao;
 
-import com.miaosha.miaoshaproduct.domain.dto.ProductDTO;
 import com.miaosha.miaoshaproduct.domain.entity.Product;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -9,15 +8,17 @@ import org.apache.ibatis.annotations.Mapper;
 public interface ProductMapper {
     int deleteByPrimaryKey(Long productId);
 
-    int insert(ProductDTO record);
+    int insert(Product record);
 
-    int insertSelective(ProductDTO record);
+    int insertSelective(Product record);
 
     Product selectByPrimaryKey(Long productId);
 
-    int updateByPrimaryKeySelective(ProductDTO record);
+    int updateByPrimaryKeySelective(Product record);
 
-    int updateByPrimaryKeyWithBLOBs(ProductDTO record);
+    int updateByPrimaryKeyWithBLOBs(Product record);
 
-    int updateByPrimaryKey(ProductDTO record);
+    int updateByPrimaryKey(Product record);
+
+    int updateProductStocks(Product product);
 }
