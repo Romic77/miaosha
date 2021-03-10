@@ -48,9 +48,9 @@ public class ProductController {
     public CommonResult<ProductDTO> findProductById(@RequestParam("productId") Long productId) {
         try {
             Product product = productService.findProductById(productId);
-            /*if (product == null) {
+            if (product == null) {
                 return CommonResult.failed("当前产品不存在:" + productId);
-            }*/
+            }
             ProductDTO productDTO = new ProductDTO();
             BeanUtils.copyProperties(product, productDTO);
             return CommonResult.success(productDTO);

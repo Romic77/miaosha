@@ -48,16 +48,17 @@ public class OrderController {
     @RequestMapping(value = "/order/placeOrder", method = RequestMethod.POST,
             produces = "application/json; charset=UTF-8", consumes = "application/json;charset=UTF-8")
     public CommonResult placeOrder(@RequestBody OrderDTO orderDTO) {
-        RLock redissonLock = redissonClient.getLock("lock");
+        RLock redissonLock = redissonClient.getFairLock("lock");
         try {
             redissonLock.lock();
+
             CommonResult<ProductDTO> productDTOCommonResult = productFeignService.findProductById(orderDTO.getProductId());
             if (productDTOCommonResult.getCode() != 200) {
                 return productDTOCommonResult;
             }
-
             ProductDTO productDTO = productDTOCommonResult.getData();
-            if (productDTO.getTotalStocks() > 0) {
+            logger.info("当前库存为:{}", productDTO.getTotalStocks());
+            if (productDTO.getTotalStocks() >= 1) {
                 Long orderId = Long.valueOf(leafFeignService.getSegmentId("leaf-segment-order"));
                 if (orderId == null) {
                     logger.error("get leaf-segment-order failed,orderId:{}", orderId);

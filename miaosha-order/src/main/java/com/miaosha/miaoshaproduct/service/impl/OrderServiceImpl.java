@@ -60,6 +60,8 @@ public class OrderServiceImpl implements IOrderService {
     @Override
     //@GlobalTransactional(rollbackFor = Exception.class)
     public CommonResult placeOrder(OrderDTO orderDTO, ProductDTO productDTO) {
+
+
         Order order = new Order();
         Long orderId = orderDTO.getOrderId();
         order.setUserId(orderDTO.getUserId());
