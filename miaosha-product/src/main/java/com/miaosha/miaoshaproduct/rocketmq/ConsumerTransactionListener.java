@@ -35,12 +35,12 @@ public class ConsumerTransactionListener implements RocketMQListener<String> {
     public void onMessage(String str) {
         logger.info("开始消费消息:{}",str);
         //解析消息内容
-        /*JSONObject jsonObject = JSONObject.parseObject(str);
+        JSONObject jsonObject = JSONObject.parseObject(str);
         OrderDTO orderDTO = jsonObject.getObject("orderDTO", OrderDTO.class);
 
         //根据orderDTO的orderId实现幂等,保证Duplication表的orderId只有一个
 
-        productService.updateProductStocks(orderDTO);*/
+        productService.updateProductStocks(orderDTO);
     }
 }
 

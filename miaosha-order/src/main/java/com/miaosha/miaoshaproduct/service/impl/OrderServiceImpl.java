@@ -57,7 +57,7 @@ public class OrderServiceImpl implements IOrderService {
      * @date 2021/3/3 13:15
      */
     @Override
-    @GlobalTransactional(rollbackFor = Exception.class)
+    //@GlobalTransactional(rollbackFor = Exception.class)
     public CommonResult placeOrder(OrderDTO orderDTO, ProductDTO productDTO) {
         Order order = new Order();
         Long orderId = Long.valueOf(leafFeignService.getSegmentId("leaf-segment-order"));
@@ -76,6 +76,7 @@ public class OrderServiceImpl implements IOrderService {
         order.setIsPayed(true);
         order.setRefundSts(1);
         orderMapper.insertSelective(order);
+        orderDTO.setOrderId(orderId);
 
 
         Long duplicationId = Long.valueOf(leafFeignService.getSegmentId("leaf-segment-duplication"));
