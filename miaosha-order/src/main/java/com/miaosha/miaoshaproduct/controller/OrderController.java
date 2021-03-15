@@ -28,6 +28,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  * @date 2021/3/9 09:30
  */
 @RestController
+@RequestMapping("/order")
 public class OrderController {
     /**
      * logger
@@ -61,7 +62,7 @@ public class OrderController {
      * @param orderDTO
      * @return
      */
-    @RequestMapping(value = "/order/placeOrder", method = RequestMethod.POST,
+    @RequestMapping(value = "/placeOrder", method = RequestMethod.POST,
             produces = "application/json; charset=UTF-8", consumes = "application/json;charset=UTF-8")
     public CommonResult placeOrder(@RequestBody OrderDTO orderDTO) {
         RLock lock = distributedLocker.lock("placeOrder");

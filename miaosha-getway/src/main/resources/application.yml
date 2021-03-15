@@ -14,7 +14,15 @@ spring:
           enabled: true
           lower-case-service-id: true
       routes:
-        - id: nacos-getway-provider
+        - id: getway-miaosha-user
           uri: lb://miaosha-user
           predicates:
             - Path=/user/**
+        - id: getway-miaosha-order
+            uri: lb://miaosha-order
+            predicates:
+              - Path=/order/**
+        - id: getway-miaosha-product
+            uri: lb://miaosha-product
+            predicates:
+              - Path=/product/**

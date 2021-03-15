@@ -15,6 +15,7 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @RestController
+@RequestMapping("/product")
 public class ProductController {
     /**
      * logger
@@ -32,7 +33,7 @@ public class ProductController {
      * @author chenqi
      * @date 2021/3/1 16:39
      */
-    @RequestMapping("/insert/product")
+    @RequestMapping("/insert")
     public String insertProduct() throws Exception {
 
         Product product = new Product();
@@ -44,7 +45,7 @@ public class ProductController {
         return productService.insertProduct(product);
     }
 
-    @RequestMapping("/product/findProductById")
+    @RequestMapping("/findProductById")
     public CommonResult<ProductDTO> findProductById(@RequestParam("productId") Long productId) {
         try {
             Product product = productService.findProductById(productId);
