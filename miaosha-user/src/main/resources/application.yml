@@ -63,3 +63,12 @@ spring:
         min-idle: 4
     password: 123456
     port: 6379
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  endpoint:
+    health:
+      show-details: always

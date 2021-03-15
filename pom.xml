@@ -24,6 +24,7 @@
         <module>miaosha-product</module>
         <module>miaosha-order</module>
         <module>miaosha-getway</module>
+        <module>miaosha-admin</module>
     </modules>
 
 

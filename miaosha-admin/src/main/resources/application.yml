@@ -1,0 +1,16 @@
+server:
+  port: 8060
+
+####服务监控server端
+spring:
+  application:
+    name: miaosha-admin-server
+  cloud:
+    nacos:
+      discovery:
+        server-addr: localhost:8848
+  security:
+    user:
+      name: admin
+      password: admin
+

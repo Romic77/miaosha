@@ -78,3 +78,13 @@ rocketmq:
   name-server: 127.0.0.1:9876
   producer:
     group: producer_miaosha_order
+
+#### 暴露端口
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  endpoint:
+    health:
+      show-details: always
