@@ -26,32 +26,37 @@ public class UserServiceImpl implements IUserService {
     @Autowired
     private UserMapper userMapper;
 
-    
+
     /**
-     *
      * @param productDTO
      * @return com.miaosha.miaoshaproduct.utils.CommonResult<com.miaosha.miaoshaproduct.domain.dto.OrderDTO>
      * @author chenqi
      * @date 2021/3/3 21:13
-    */
+     */
     @Override
     public CommonResult<OrderDTO> userPlaceOrder(ProductDTO productDTO) throws Exception {
-            OrderDTO orderDTO = new OrderDTO();
-            orderDTO.setProductId(productDTO.getProductId());
-            orderDTO.setProductName(productDTO.getProductName());
-            User user = userMapper.selectByPrimaryKey(1l);
-            if (user == null) {
-                return CommonResult.failed("findUserById error");
-            }
-            if (user.getBalance().compareTo(new BigDecimal("0")) < 0) {
-                return CommonResult.failed(user.getUsername() + ":用户余额不足,请充值");
-            }
-            orderDTO.setUserId(user.getUserId() + "");
-            orderDTO.setCreateTime(DateTimeConverterUtil.toDate(LocalDateTime.now()));
-            orderDTO.setProductNums(1);
-            orderDTO.setStatus(2);
-            orderDTO.setTotal(productDTO.getProductPrice());
+        OrderDTO orderDTO = new OrderDTO();
+        orderDTO.setProductId(productDTO.getProductId());
+        orderDTO.setProductName(productDTO.getProductName());
+        User user = userMapper.selectByPrimaryKey(1l);
+        if (user == null) {
+            return CommonResult.failed("findUserById error");
+        }
+        if (user.getBalance().compareTo(new BigDecimal("0")) < 0) {
+            return CommonResult.failed(user.getUsername() + ":用户余额不足,请充值");
+        }
+        orderDTO.setUserId(user.getUserId() + "");
+        orderDTO.setCreateTime(DateTimeConverterUtil.toDate(LocalDateTime.now()));
+        orderDTO.setProductNums(1);
+        orderDTO.setStatus(2);
+        orderDTO.setTotal(productDTO.getProductPrice());
 
-            return CommonResult.success(orderDTO);
+        return CommonResult.success(orderDTO);
+    }
+
+    @Override
+    public User getUserById(Long id) {
+
+        return userMapper.selectByPrimaryKey(id);
     }
 }

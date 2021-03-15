@@ -1,9 +1,11 @@
 package com.miaosha.miaoshaproduct.controller;
 
 
+import com.alibaba.fastjson.JSONObject;
 import com.google.common.util.concurrent.ListeningExecutorService;
 import com.miaosha.miaoshaproduct.domain.dto.OrderDTO;
 import com.miaosha.miaoshaproduct.domain.dto.ProductDTO;
+import com.miaosha.miaoshaproduct.domain.entity.User;
 import com.miaosha.miaoshaproduct.service.IUserService;
 import com.miaosha.miaoshaproduct.service.OrderFeignService;
 import com.miaosha.miaoshaproduct.service.ProductFeignService;
@@ -11,6 +13,7 @@ import com.miaosha.miaoshaproduct.utils.CommonResult;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -24,6 +27,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @date 2021/3/1 15:11
  */
 @RestController
+@RequestMapping("/user")
 public class UserController {
     private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
@@ -48,7 +52,7 @@ public class UserController {
      * @author chenqi
      * @date 2021/3/1 15:13
      */
-    @RequestMapping(value = "/user/placeOrder", method = RequestMethod.POST, produces = "application/json; charset=utf-8")
+    @RequestMapping(value = "/placeOrder", method = RequestMethod.POST, produces = "application/json; charset=utf-8")
     public CommonResult placeOrder(String productId) {
         try {
             CommonResult<ProductDTO> productDTOCommonResult = productFeignService.findProductById(Long.valueOf(productId));
@@ -79,13 +83,19 @@ public class UserController {
      * @author chenqi
      * @date 2021/3/5 10:47
      */
-    @RequestMapping(value = "/user/payOrder", method = RequestMethod.POST, produces = "application/json; charset=utf-8")
+    @RequestMapping(value = "/payOrder", method = RequestMethod.POST, produces = "application/json; charset=utf-8")
     public CommonResult payOrder(String productId) {
         //1. 校验订单状态
         //2. 判断用户余额是否足够
         //3. 修改订单状态
         return CommonResult.success(null);
+    }
 
+    @RequestMapping(value = "/get/{id}", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
+    public CommonResult getUserById(@PathVariable("id") Long id) {
+       logger.info("通过网关访问到user,聚合所有服务");
+        User user=userService.getUserById(id);
+        return CommonResult.success(user);
     }
 
 }

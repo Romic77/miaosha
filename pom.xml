@@ -23,6 +23,7 @@
         <module>miaosha-user</module>
         <module>miaosha-product</module>
         <module>miaosha-order</module>
+        <module>miaosha-getway</module>
     </modules>
 
 

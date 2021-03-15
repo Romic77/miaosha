@@ -2,6 +2,7 @@ package com.miaosha.miaoshaproduct.service;
 
 import com.miaosha.miaoshaproduct.domain.dto.OrderDTO;
 import com.miaosha.miaoshaproduct.domain.dto.ProductDTO;
+import com.miaosha.miaoshaproduct.domain.entity.User;
 import com.miaosha.miaoshaproduct.utils.CommonResult;
 
 /**
@@ -12,4 +13,6 @@ import com.miaosha.miaoshaproduct.utils.CommonResult;
 public interface IUserService {
 
     public CommonResult<OrderDTO> userPlaceOrder(ProductDTO productDTO) throws Exception;
+
+    User getUserById(Long id);
 }
