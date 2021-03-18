@@ -56,8 +56,8 @@ public class OrderController {
     /**
      * 使用 rocketmq 进行订单库存 发布订阅的时候
      * 下游正在消费最后一条的时候，上游刚好查询库存还有 所以会超卖(核心问题就是 生产速度 > 消费速度)
-     * 1. 使用seata AT模式 强一致性
-     * 2。查询产品库存，然后把用户消费的库存存入redis。存完之后 通知库存从redis拉取
+     * 1. 使用seata AT模式 强一致性(需要测试性能)
+     * 2. 查询产品库存，然后把用户消费的库存存入redis。存完之后 通知库存从redis拉取(最终一致性)
      *
      * @param orderDTO
      * @return

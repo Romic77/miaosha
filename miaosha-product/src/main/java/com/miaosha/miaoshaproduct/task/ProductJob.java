@@ -4,8 +4,6 @@ import com.miaosha.miaoshaproduct.domain.dao.ProductMapper;
 import com.miaosha.miaoshaproduct.domain.entity.Product;
 import com.xxl.job.core.context.XxlJobHelper;
 import com.xxl.job.core.handler.annotation.XxlJob;
-import org.redisson.api.RAtomicLong;
-import org.redisson.api.RList;
 import org.redisson.api.RedissonClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -40,10 +38,7 @@ public class ProductJob {
             return;
         }
 
-        RList<String> list = redissonClient.getList("2001");
-        for (int i = 0; i < 1000; i++) {
-            list.add(i, "1");
-        }
+        redissonClient.getBucket(product.getProductId().toString()).set(product.getTotalStocks());
 
         // default success
     }
