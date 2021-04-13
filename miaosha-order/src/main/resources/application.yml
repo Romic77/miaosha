@@ -54,7 +54,7 @@ spring:
     password: 123456
     port: 6379
 seata:
-  enabled: false
+  enabled: true
   application-id: ${spring.application.name}
   tx-service-group: miaosha-tx-group
   enable-auto-data-source-proxy: true

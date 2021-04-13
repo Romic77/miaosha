@@ -93,7 +93,6 @@ public class UserController {
 
     @RequestMapping(value = "/get/{id}", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
     public CommonResult getUserById(@PathVariable("id") Long id) {
-       logger.info("通过网关访问到user,聚合所有服务");
         User user=userService.getUserById(id);
         return CommonResult.success(user);
     }

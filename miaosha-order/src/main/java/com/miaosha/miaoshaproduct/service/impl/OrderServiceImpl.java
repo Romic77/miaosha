@@ -1,19 +1,15 @@
 package com.miaosha.miaoshaproduct.service.impl;
 
-import com.miaosha.miaoshaproduct.domain.dao.DuplicationMapper;
 import com.miaosha.miaoshaproduct.domain.dao.OrderMapper;
 import com.miaosha.miaoshaproduct.domain.dto.OrderDTO;
 import com.miaosha.miaoshaproduct.domain.dto.ProductDTO;
-import com.miaosha.miaoshaproduct.domain.entity.Duplication;
 import com.miaosha.miaoshaproduct.domain.entity.Order;
-import com.miaosha.miaoshaproduct.rocketmq.SenderService;
 import com.miaosha.miaoshaproduct.service.IOrderService;
 import com.miaosha.miaoshaproduct.service.LeafFeignService;
 import com.miaosha.miaoshaproduct.service.ProductFeignService;
 import com.miaosha.miaoshaproduct.utils.CommonResult;
 import com.xkzhangsan.time.converter.DateTimeConverterUtil;
 import io.seata.spring.annotation.GlobalTransactional;
-import org.redisson.api.RedissonClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,15 +36,6 @@ public class OrderServiceImpl implements IOrderService {
     @Autowired
     private ProductFeignService productFeignService;
 
-    @Autowired
-    private RedissonClient redissonClient;
-
-    @Autowired
-    private SenderService senderService;
-
-    @Autowired
-    private DuplicationMapper duplicationMapper;
-
     /**
      * 1. 用户下订单
      * 2. 基于seata AT 分布式事务
@@ -58,10 +45,8 @@ public class OrderServiceImpl implements IOrderService {
      * @date 2021/3/3 13:15
      */
     @Override
-    //@GlobalTransactional(rollbackFor = Exception.class)
-    public CommonResult placeOrder(OrderDTO orderDTO, ProductDTO productDTO) {
-
-
+    @GlobalTransactional(rollbackFor = Exception.class)
+    public CommonResult placeOrder(OrderDTO orderDTO) {
         Order order = new Order();
         Long orderId = orderDTO.getOrderId();
         order.setUserId(orderDTO.getUserId());
@@ -76,18 +61,11 @@ public class OrderServiceImpl implements IOrderService {
         order.setRefundSts(1);
         orderMapper.insertSelective(order);
 
-        Long duplicationId = Long.valueOf(leafFeignService.getSegmentId("leaf-segment-duplication"));
-        if (duplicationId == null) {
-            logger.error("get leaf-segment-duplication failed,duplicationId:{}", duplicationId);
-            return CommonResult.failed("get leaf-segment-duplication failed");
-        }
-        //幂等处理
-        Duplication duplication = new Duplication();
-        duplication.setDuplicationId(duplicationId);
-        duplication.setCreateTime(DateTimeConverterUtil.toDate(LocalDateTime.now()));
-        duplication.setServiceName("miaosha-order");
-        duplication.setServiceId(orderId);
-        duplicationMapper.insert(duplication);
+        //扣减库存
+        ProductDTO productDTO=new ProductDTO();
+        productDTO.setProductId(orderDTO.getProductId());
+        productDTO.setTotalStocks(orderDTO.getProductNums());
+        productFeignService.updateByPrimaryKeySelective(productDTO);
         return CommonResult.success(null);
     }
 }

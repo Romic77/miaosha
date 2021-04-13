@@ -19,10 +19,10 @@ spring:
           predicates:
             - Path=/user/**
         - id: getway-miaosha-order
-            uri: lb://miaosha-order
-            predicates:
-              - Path=/order/**
+          uri: lb://miaosha-order
+          predicates:
+            - Path=/order/**
         - id: getway-miaosha-product
-            uri: lb://miaosha-product
-            predicates:
-              - Path=/product/**
+          uri: lb://miaosha-product
+          predicates:
+            - Path=/product/**

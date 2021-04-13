@@ -69,7 +69,7 @@ public class ProductController {
      * @author chenqi
      * @date 2021/3/5 10:42
      */
-    @RequestMapping(value = "/product/updateByPrimaryKeySelective", method = RequestMethod.POST)
+    @RequestMapping(value = "/updateByPrimaryKeySelective", method = RequestMethod.POST)
     public CommonResult<ProductDTO> updateByPrimaryKeySelective(@RequestBody ProductDTO productDTO) throws Exception {
         try {
             Product product = new Product();
